@@ -1,0 +1,183 @@
+.container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.studentCardsContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 80%;
+    grid-row: 1/3;
+    grid-column: 1/2;
+}
+
+.optionsStudentContainer{
+    margin-top: 10px;
+    width: 400px;
+    justify-content: space-evenly;
+    display: flex;
+    justify-self: start;
+    align-self: start;
+    grid-column: 1/2;
+    grid-row: 1/2;
+}
+
+
+.deleteStudent,
+  .editStudent {
+    background-color: transparent;
+    border: 2px solid;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  /* Estilo específico para el botón 'Eliminar Grupo' */
+  .deleteStudent {
+    color: #e74c3c; /* Rojo */
+    border-color: #e74c3c;
+  }
+  
+  .deleteStudent:hover {
+    background-color: #e74c3c;
+    color: #fff;
+  }
+  
+  /* Estilo específico para el botón 'Editar Grupo' */
+  .editStudent {
+    color: #3498db; /* Azul */
+    border-color: #3498db;
+  }
+  
+  .editStudent:hover {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
+
+.studentContainer{
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+ 
+    width: 90vw;
+    height: 100vh;
+    background-color: #f3f4f8;
+}
+
+.tasksContainer{
+    align-self: center;
+    grid-column: 2/3;
+    grid-row: 1/3;
+    border-radius: 10px;
+    width: 80%;
+    height: 70%;
+}
+
+.taskInfo{
+
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #007a87;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+.createTaskText{
+    cursor: pointer;
+}
+
+/* Container for the tasks section */
+.tasks {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-y: auto;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+  }
+  
+  /* Header for task information */
+  .taskInfoTextContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #007a87;
+    padding: 15px 20px;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .taskInfoTextContainer > p {
+    color: #fff;
+    font-family: "Fredoka", sans-serif;
+    font-size: 1rem;
+    margin: 0;
+  }
+  
+  /* Individual task item */
+  .task {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e7e8ec;
+  }
+  
+  .task:last-child {
+    border-bottom: none;
+  }
+  
+  .task > p {
+    margin: 0;
+    text-align: center;
+    color: #333;
+    font-size: 0.95rem;
+  }
+  
+  .task > input {
+    font-family: "Fredoka", sans-serif;
+
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #e7e8ec;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s;
+
+  }
+  
+  .task > input:focus {
+    border-color: #007a87;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .taskInfoTextContainer {
+      flex-direction: column;
+      padding: 10px;
+    }
+  
+    .task {
+      grid-template-columns: 1fr;
+      row-gap: 10px;
+      padding: 10px;
+    }
+  
+    .task > p,
+    .task > input {
+      text-align: left;
+    }
+  }

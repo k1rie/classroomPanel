@@ -1,0 +1,66 @@
+/* ConfirmDelete.module.css */
+
+/* Estilo del contenedor (overlay) */
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  /* Estilo de la ventana modal */
+  .optionsContainer {
+    background-color: #fff; /* Fondo blanco */
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Estilo del texto de advertencia */
+  .advise {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #333;
+    font-family: 'Fredoka', sans-serif;
+  }
+  
+  /* Estilo del botón "Eliminar" */
+  .optionsContainer > button {
+    background-color: #e74c3c; /* Rojo */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .optionsContainer > button:hover {
+    background-color: #c0392b; /* Rojo más oscuro al pasar el cursor */
+  }
+  
+  /* Estilo del enlace "Cancelar" */
+  .cancel {
+    color: #3498db; /* Azul */
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+  }
+  
+  .cancel:hover {
+    text-decoration: underline;
+  }

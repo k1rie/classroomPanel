@@ -1,0 +1,89 @@
+/* Estilos generales */
+p {
+    color: #333;
+    font-family: "Fredoka", sans-serif;
+  }
+  
+  /* Estilos del contenedor */
+  .container {
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: 300px;
+    max-width: 100%;
+    height: 200px;
+    background-color: #fff;
+    border: 1px solid #e7e8ec;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .container:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+  
+  /* Posicionamiento común para infoArea y infoGroup */
+  .infoArea,
+  .infoGroup {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .infoArea {
+    justify-content: flex-start;
+  }
+  
+  .infoGroup {
+    justify-content: flex-end;
+  }
+  
+  .infoStudentsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Estilos para numberStudents */
+  .numberStudents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background-color: #f3f4f8;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  /* Estilos para infoStudents */
+  .infoStudents {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  
+  /* Media Queries para responsividad */
+  @media (max-width: 480px) {
+    .container {
+      width: 100%;
+      height: auto;
+      grid-template-rows: auto auto;
+    }
+  
+    .numberStudents {
+      width: 60px;
+      height: 60px;
+    }
+  
+    .infoStudents {
+      font-size: 1rem;
+    }
+  
+    .infoArea,
+    .infoGroup {
+      padding: 5px;
+    }
+  }

@@ -1,0 +1,15 @@
+.container{
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items:center;
+    width: 100%;
+    height: 60px;
+    border-bottom: 1px solid #e7e8ec;
+    transition: 0.5s all;
+}
+
+.container:hover{
+transform: scale(1.2);
+}
