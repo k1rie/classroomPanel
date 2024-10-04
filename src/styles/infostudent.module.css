@@ -1,7 +1,7 @@
 .container{
     text-decoration: none;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 1fr;
     justify-items:center;
     width: 100%;
@@ -12,4 +12,9 @@
 
 .container:hover{
 transform: scale(1.2);
+}
+
+.email{
+    width: 100%;
+    overflow-wrap: break-word;
 }

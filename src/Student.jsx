@@ -186,8 +186,8 @@ getTasks()
 
     return(
         <div className={StudentStyles.container}>
-            <ConfirmDelete addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
-            <Form target="students" students={students} input1Type="text" input1="Nombre" input2="Apellidos" input3="Correo" addStudent ={addStudent}  addForm ={addForm2}/>
+            <ConfirmDelete  addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
+            <Form studentData={student} target="students" students={students} input1Type="text" input1="Nombre" input2="Apellidos" input3="Correo" addStudent ={addStudent}  addForm ={addForm2}/>
 
             <NavBar/>
             <div className={StudentStyles.studentContainer}>

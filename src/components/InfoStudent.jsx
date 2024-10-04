@@ -7,6 +7,9 @@ const InfoStudent = (props)=>{
     return(
 <Link to={`/student/group/${props.idgroup}/${props.id}/${props.grade}/${props.group}/${props.area}`} className={InfoStudentStyles.container}>
 
+<p>{props.lista}</p>
+
+
 <p>{props.lastName}</p>
 
     
@@ -14,7 +17,7 @@ const InfoStudent = (props)=>{
 <p>{props.firstName}</p>
 
 
-<p>{props.email}</p>
+<p className={InfoStudentStyles.email}>{props.email}</p>
 
 
 

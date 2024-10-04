@@ -8,7 +8,10 @@ const Form = (props)=>{
     const [input2,setInput2] = useState("")
     const [input3,setInput3] = useState("")
     const [groupData,setGroupData] = useState([{"insertId": ""}])
-    const {grade,group,area} = useParams()
+    const {grade,group,area,} = useParams()
+    const refInput1 = useRef()
+    const refInput2 = useRef()
+    const refInput3 = useRef()
     const form = useRef()
 
 
@@ -95,9 +98,21 @@ if(props.addGroup && props.target === "groups"){
 
 
 useEffect(()=>{
+
     getForm()
     
 },[])
+
+useEffect(()=>{
+ 
+  if(props.studentData){
+    console.log(props.studentData)
+    refInput1.current.value = props.studentData.nombre
+    refInput2.current.value = props.studentData.apellidos
+    refInput3.current.value = props.studentData.correo
+  }
+
+},[props.studentData])
 
     return(
         <>
@@ -114,6 +129,7 @@ useEffect(()=>{
     <div className={FormStyles.flex}>
       <label>
         <input
+        ref={refInput1}
           required
           placeholder=" "
           type={props.input1Type}
@@ -126,6 +142,8 @@ useEffect(()=>{
       </label>
       <label>
         <input
+        ref={refInput2}
+        
           required
           placeholder=" "
           type="text"
@@ -139,6 +157,8 @@ useEffect(()=>{
     </div>
     <label>
       <input
+      ref={refInput3}
+     
         required
         placeholder=" "
         type="text"

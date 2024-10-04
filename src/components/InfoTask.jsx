@@ -1,5 +1,6 @@
 import infoTaskStyle from "../styles/infotask.module.css"
 import editSvg from "../assets/pen-svgrepo-com (1).svg"
+import trashSvg from "../assets/trash-bin-trash-svgrepo-com.svg"
 import { useRef, useState } from "react"
 
 
@@ -8,6 +9,8 @@ const InfoTask = (props)=>{
     const [newNameTask,setNewNameTask] = useState()
 
     const [newRateTask,setNewRateTask] = useState()
+
+    const container = useRef()
 
 
     const input1 = useRef()
@@ -54,11 +57,28 @@ const InfoTask = (props)=>{
             text2.current.textContent = newRateTask
     }
 
+   async function deleteTask(){
+        await fetch("https://tasksflow-backend.onrender.com/deleteTask",{
+            method:"DELETE",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                alumnosTask: props.students,
+               id: props.id,
+               nameTask: props.name,
+               grade: props.grade,
+               group: props.group,
+               area: props.area
+            })
+        }).then(data=>container.current.style.display = "none")
+    }
+
 
 
 
 return(
-    <div className={infoTaskStyle.task}> 
+    <div ref={container} className={infoTaskStyle.task}> 
 
     <div className={infoTaskStyle.infoTaskContainer}>
             <input ref={input1} className={infoTaskStyle.input} type="text" onKeyUp={(e)=>{
@@ -71,7 +91,7 @@ return(
             }}/>
         <p ref={text1}>{props.name}</p>  
         <img className={infoTaskStyle.editSvg} src={editSvg} onClick={(e)=>{
-
+input1.current.value = props.name
             input1.current.style.display ="block"
             text1.current.style.display ="none"
         }}/>
@@ -91,11 +111,16 @@ return(
             }}/>
             <p ref={text2} >{props.rate}</p>   
             <img className={infoTaskStyle.editSvg} src={editSvg} onClick={(e)=>{
-
+                input2.current.value = props.rate
 input2.current.style.display ="block"
 text2.current.style.display ="none"
 }}/> 
         
+        <img className={infoTaskStyle.editSvg} src={trashSvg} onClick={(e)=>{
+deleteTask()
+}}/> 
+        
+ 
         </div>
 
     </div>

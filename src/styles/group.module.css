@@ -77,8 +77,9 @@
   .studentsInfoContainer {
     background-color: #007a87;
     border-radius: 10px 10px 0 0;
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
     width: 100%;
     border-bottom: 1px solid #e7e8ec;
   }

@@ -26,7 +26,20 @@
     justify-content: center;
 }
 
-.input{
+
+.input {
     display: none;
-    width: 30%;
-}
+    font-family: "Fredoka", sans-serif;
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #e7e8ec;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s;
+
+  }
+  
+  .input:focus {
+    border-color: #007a87;
+  }

@@ -208,6 +208,7 @@ const Group = ()=>{
         })
     }
        }
+
        
     useEffect(()=>{
         console.log(student)
@@ -255,7 +256,7 @@ return(
 <div className={GroupStyles.tasks}>
 
 {tasks.map((e)=>{
-    return <InfoTask id={e.id} students={students} rate={e.rate} name={e.name}/>
+    return <InfoTask grade={grade} group={group} area={area} id={e.id} students={students} rate={e.rate} name={e.name}/>
 })}
 
 
@@ -267,6 +268,10 @@ return(
 <p className={GroupStyles.addStudentButton} onClick={showCreateStudentForm}>Añadir Alumno</p>
 <Form key={2} target="students" input1Type="text" input1="Nombre" input2="Apellidos" input3="Email" addStudent ={addStudent}  addForm ={addForm}/>
 <div className={GroupStyles.studentsInfoContainer}>
+
+<div className={GroupStyles.studentsSection}>
+<p className={GroupStyles.info}>Lista</p>
+</div>
 
 <div className={GroupStyles.studentsSection}>
 <p className={GroupStyles.info}>Apellidos</p>
@@ -284,9 +289,9 @@ return(
 
 </div>
 <div className={GroupStyles.students}>
-{students.map((e)=>{
-    return <InfoStudent idgroup={id} area={area} grade={grade} group={group} id={e.id} lastName={e.apellidos} firstName ={e.nombre} email={e.correo}/>
-
+{students.map((e,index)=>{
+    return (<InfoStudent lista ={index+1} idgroup={id} area={area} grade={grade} group={group} id={e.id} lastName={e.apellidos} firstName ={e.nombre} email={e.correo}/>)
+    
 })}
 </div>
 
