@@ -1,0 +1,78 @@
+/* src/components/AuthForm.module.css */
+
+.container {
+    font-family: "Fredoka", sans-serif;
+    box-shadow: 0px 0px 10px -4px black;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    max-width: 400px;
+    width: 90%;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    z-index: 1000000;
+  }
+
+  .succesfullSvg{
+    display: none;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .inputGroup {
+    margin-bottom: 1rem;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .button {
+    padding: 0.75rem;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .incorrectText{
+    display: none;
+    color: red;
+  }
+  
+  .toggle {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .link {
+    color: #007BFF;
+    cursor: pointer;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  

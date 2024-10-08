@@ -56,7 +56,9 @@ const Student = ()=>{
                 body: JSON.stringify({
                     nombre: studentData.nombre,
                     apellidos: studentData.apellidos,
-                    correo: studentData.correo
+                    correo: studentData.correo,
+                    emailUser: localStorage.getItem("email"),
+                    password: localStorage.getItem("password")
                 })
            }).then(data=>data.json())
        
@@ -91,13 +93,25 @@ navigate(0)
         }
 
     function getStudentInfo (){
-        fetch(`https://tasksflow-backend.onrender.com/getStudent/${id}`).then(data=>data.json()).then(data=>
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getStudent/${id}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            }
+        }).then(data=>data.json()).then(data=>
             setStudent(data[0])
         )
     }
 
     function getTasks(){
-        fetch(`https://tasksflow-backend.onrender.com/getTasks/${Number(id)}`).then(data=>data.json()).then(data=>
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getTasks/${Number(id)}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            }
+        }).then(data=>data.json()).then(data=>
             setTasks(data)
         )
     }
@@ -124,7 +138,13 @@ navigate(0)
            }
 
            function getStudents() {
-            fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`).then(data=>data.json())
+            const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+            fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`,{
+                headers:{
+                    'Authorization': `Basic ${credentials}`,
+                    "Content-Type":"application/json"
+                }
+            }).then(data=>data.json())
             .then((data)=>{setStudents(data)}).then(data=> {console.log(data)}
         )
         }
@@ -145,7 +165,14 @@ navigate(0)
             if(confirm === true){
                 console.log("iiiaaa")
                await fetch(`https://tasksflow-backend.onrender.com/deleteStudent/${Number(id)}`,{
-                    method: "DELETE"
+                    method: "DELETE",
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+                    body:JSON.stringify({
+                        emailUser: localStorage.getItem("email"),
+                        password: localStorage.getItem("password")
+                    })
                 })
                 navigate(`/group/${id}/${area}/${grade}/${group}`)
     
@@ -168,7 +195,9 @@ navigate(0)
                 body: JSON.stringify({
                     newRate:Number(newRate),
                     idStudent: Number(id),
-                    taskName: taskName
+                    taskName: taskName,
+                    emailUser: localStorage.getItem("email"),
+                    password: localStorage.getItem("password")
                 })
             })
            
@@ -203,7 +232,7 @@ getTasks()
 
 </div>
 <div className={StudentStyles.tasksContainer}>
-<p className={StudentStyles.createTaskText} onClick={showCreateTask}>Crear Tarea</p>
+<button className={StudentStyles.taskButtonAdd} onClick={showCreateTask}>Crear Tarea</button>
 <Form target="tasks" students={students} input1Type="text" input1="Nombre" input2="Valor" input3="Calificación Final" addTask ={addTask}  addForm ={addForm}/>
 
 <div className={StudentStyles.taskInfo}>

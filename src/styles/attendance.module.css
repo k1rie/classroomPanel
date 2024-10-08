@@ -1,0 +1,14 @@
+.container{
+    width: 85vw;
+    height: 100vh;
+    display: flex;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}

@@ -1,18 +1,33 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import NavBarStyles from '../styles/navbar.module.css';
 import HomeSvg from '../assets/home-angle-2-svgrepo-com.svg'; // Asegúrate de importar correctamente tu SVG
 
 const Navbar = () => {
+
+  const navigate = useNavigate()
+  const location = useLocation()
+  const quitPhoneBar = useRef()
+
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    quitPhoneBar.current.style.display="block"
   };
 
   const focusOption = (e) => {
     // Lógica para manejar el foco de la opción
   };
+  
+  const logOut = ()=>{
+    if(location.pathname === "/"){
+      navigate(0)
+    }
+    localStorage.removeItem("email")
+    localStorage.removeItem("password")
+  }
 
   return (
     <>
@@ -36,7 +51,10 @@ const Navbar = () => {
           isOpen ? NavBarStyles.active : ''
         }`}
       >
+                            <button onClick={toggleMenu} ref={quitPhoneBar} className={NavBarStyles.quitPhoneBar}>X</button>
+
         <div className={NavBarStyles.menuContainer}>
+          
           <p className={NavBarStyles.menuTittle}>MENU</p>
           <Link
             to="/"
@@ -48,10 +66,13 @@ const Navbar = () => {
               }
             }}
           >
+
             <img className={NavBarStyles.optionSvg} src={HomeSvg} alt="Home" />
             <p className={NavBarStyles.optionTittle}>Home</p>
           </Link>
+          <Link to="/"><button onClick={logOut} className={NavBarStyles.logOut}>Cerrar Sesion</button></Link>
           {/* Añade más opciones de menú aquí */}
+          
         </div>
       </div>
     </>

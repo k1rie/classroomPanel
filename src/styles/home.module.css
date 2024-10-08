@@ -56,10 +56,26 @@ h1{
 }
 
 .groupsCreate{
- cursor: pointer;
-  font-family: "Fredoka", sans-serif;
-  font-size: 1.2rem;
-  color: #007a87;
+  margin-bottom: 20px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px solid;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.groupsCreate {
+  color: #007a87; /* Azul */
+  border-color: #007a87;
+}
+
+.groupsCreate:hover {
+  background-color: #007a87;
+  color: #fff;
 }
 
 .container{
@@ -98,4 +114,36 @@ h1{
   align-items: center;
   grid-column: 1/2;
   grid-row: 2/3;
+}
+
+@media (max-height:780px) {
+  .groupsContainer{
+    height: 100vh;
+  }
+  .groupsCardsContainer{
+    height: 100%;
+  }
+}
+
+@media (max-width:1470px) {
+ .groupsContainer{
+  width: 80vw;
+ }
+}
+
+
+@media (max-width:1250px) {
+  .groupsContainer{
+    height: 70%;
+   width: 50vw;
+  }
+ }
+
+ @media (max-width: 768px) {
+  .homeContainer{
+    width: 100%;
+  }
+  .groupsContainer{
+    width: 90%;
+  }
 }

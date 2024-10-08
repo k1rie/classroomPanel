@@ -6,7 +6,13 @@ const ExportDataGroup = ()=>{
     const {grade,group,area} = useParams()
 
     function exportData(){
-        fetch(`https://tasksflow-backend.onrender.com/getDataList/${grade}/${group}/${area}`).then(response => response.blob())  // Convertir a Blob
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getDataList/${grade}/${group}/${area}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type":"application/json"
+            }
+        }).then(response => response.blob())  // Convertir a Blob
         .then(blob => {
             // Crear una URL temporal para descargar el archivo
             const url = window.URL.createObjectURL(new Blob([blob]));

@@ -2,9 +2,12 @@ import infoTaskStyle from "../styles/infotask.module.css"
 import editSvg from "../assets/pen-svgrepo-com (1).svg"
 import trashSvg from "../assets/trash-bin-trash-svgrepo-com.svg"
 import { useRef, useState } from "react"
+import { useParams } from "react-router-dom"
 
 
 const InfoTask = (props)=>{
+
+    const {grade,group,area} = useParams()
 
     const [newNameTask,setNewNameTask] = useState()
 
@@ -29,7 +32,9 @@ const InfoTask = (props)=>{
                 alumnosTask: props.students,
                 newTaskName: newNameTask,
                 nameTask: props.name,
-                idTask: props.id
+                idTask: props.id,
+                emailUser: localStorage.getItem("email"),
+                password: localStorage.getItem("password")
             })
         })
          input1.current.style.display ="none"
@@ -45,10 +50,16 @@ const InfoTask = (props)=>{
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
+                grade: grade,
+                group: group,
+                area: area,
+                rate: props.rate,
                 alumnosTask: props.students,
                 newRate: newRateTask,
                 nameTask: props.name,
-                idTask: props.id
+                idTask: props.id,
+                emailUser: localStorage.getItem("email"),
+                password: localStorage.getItem("password")
             })
         })
         console.log(newRateTask)
@@ -69,7 +80,9 @@ const InfoTask = (props)=>{
                nameTask: props.name,
                grade: props.grade,
                group: props.group,
-               area: props.area
+               area: props.area,
+               emailUser: localStorage.getItem("email"),
+               password: localStorage.getItem("password")
             })
         }).then(data=>container.current.style.display = "none")
     }

@@ -46,7 +46,9 @@ const getInfo= ()=>{
         rate: Number(input2),
         finalRate: Number(input3),
         final_rate: Number(input3),
-        alumnosTask: props.students
+        alumnosTask: props.students,
+        emailUser: localStorage.getItem("email"),
+        password: localStorage.getItem("password")
     })
   }
 
@@ -74,7 +76,9 @@ if(props.addGroup && props.target === "groups"){
         body: JSON.stringify({
             especialidad: input3,
             grado:input1,
-            grupo: input2
+            grupo: input2,
+            emailUser: localStorage.getItem("email"),
+            password: localStorage.getItem("password")
         })
     }).then((response) => { return response.json() }).then((response) => {
         if(props.addGroup && props.target === "groups"){
@@ -84,7 +88,9 @@ if(props.addGroup && props.target === "groups"){
                 grupo: input2,
                 especialidad: input3,
                 alumnos: 0,
-                idGroup: response[0].insertId
+                idGroup: response[0].insertId,
+                emailUser: localStorage.getItem("email"),
+                password: localStorage.getItem("password")
             })
           }
           
@@ -108,8 +114,11 @@ useEffect(()=>{
   if(props.studentData){
     console.log(props.studentData)
     refInput1.current.value = props.studentData.nombre
+    setInput1(refInput1.current.value)
     refInput2.current.value = props.studentData.apellidos
+    setInput2(refInput2.current.value)
     refInput3.current.value = props.studentData.correo
+    setInput3(refInput3.current.value)
   }
 
 },[props.studentData])

@@ -46,8 +46,17 @@ const Group = ()=>{
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(task)
-        }).then(data=>data.json()).then(data=>console.log(data))
+            body: JSON.stringify({
+                nombre: task.nombre,
+                rate:task.rate,
+                grade:task.grade,
+                group:task.group,
+                area: task.area,
+                emailUser: localStorage.getItem("email"),
+                password: localStorage.getItem("password"),
+                alumnosTask: task.alumnosTask
+            })
+        })
         }
         
         }
@@ -68,7 +77,14 @@ const Group = ()=>{
            }
 
            function getTasksGroup(){
-            fetch(`https://tasksflow-backend.onrender.com/getTasksGroup/${grade}/${group}/${area}`).then(data=>data.json()).then(data=>{
+            const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+            fetch(`https://tasksflow-backend.onrender.com/getTasksGroup/${grade}/${group}/${area}`,{
+                headers:{
+                    'Authorization': `Basic ${credentials}`,
+                    "Content-Type": "application/json"
+                },
+
+            }).then(data=>data.json()).then(data=>{
                 console.log(data)
                 setTasks(data)
             }
@@ -112,7 +128,16 @@ const Group = ()=>{
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(student)
+                body: JSON.stringify({
+                    nombre: student.nombre,
+                    apellidos: student.apellidos,
+                    grupo: student.grupo,
+                    grado: student.grado,
+                    especialidad: student.especialidad,
+                    correo: student.correo,
+                    emailUser: localStorage.getItem("email"),
+                    password: localStorage.getItem("password")
+                })
            }).then(data=>data.json())
        
 
@@ -141,7 +166,13 @@ const Group = ()=>{
 
 
     function getStudents() {
-        fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`).then(data=>data.json())
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            }
+        }).then(data=>data.json())
         .then((data)=>{setStudents(data)}).then(data=> {console.log(data)}
     )
     }
@@ -153,7 +184,14 @@ const Group = ()=>{
     async function confirmDeleteState(confirm){
         if(confirm === true){
            await fetch(`https://tasksflow-backend.onrender.com/deleteClassroom/${Number(id)}`,{
-                method: "DELETE"
+                method: "DELETE",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    emailUser: localStorage.getItem("email"),
+                    password: localStorage.getItem("password")
+                })
             })
             navigate("/")
 
@@ -186,9 +224,11 @@ const Group = ()=>{
     console.log(student)
        }
 
-       function editGroup(){
-        if(groupData.length > 0){
-        fetch("https://tasksflow-backend.onrender.com/updateGroup",{
+       async function editGroup(){
+        console.log(groupData)
+        if(groupData.area && groupData.area.length > 0){
+            console.log("fsafasgfas")
+       await fetch("https://tasksflow-backend.onrender.com/updateGroup",{
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -202,10 +242,13 @@ const Group = ()=>{
     grade: Number(grade),
     group: group,
     area: area,
-    id:id
+    id:id,
+    emailUser: localStorage.getItem("email"),
+    password: localStorage.getItem("password")
 }
             )
         })
+        navigate(`/group/${id}/${groupData.area}/${groupData.grade}/${groupData.group}`) 
     }
        }
 

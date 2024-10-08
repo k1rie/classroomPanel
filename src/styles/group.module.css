@@ -2,7 +2,8 @@
 .container {
     display: flex;
     width: 100%;
-    height: 100%;
+
+  
   }
 
   /* Contenedor de Opciones del Estudiante */
@@ -47,6 +48,13 @@
     background-color: #3498db;
     color: #fff;
   }
+
+   
+  .editGroup:hover {
+    background-color: #3498db;
+    color: #fff;
+  }
+  
   
   /* Contenedor del Grupo */
   .groupContainer {
@@ -55,10 +63,10 @@
     gap: 20px;
     justify-items: center;
     align-items: start;
-    width: 85vw;
+    width: 100vw;
     margin: 0 auto;
-    padding: 20px;
     background-color: #f3f4f8;
+
   }
   
   /* Información del Grupo */
@@ -68,9 +76,11 @@
   
   /* Contenedor de Estudiantes */
   .studentsContainer {
+    height: 50%;
+
     border-radius: 10px;
     grid-column: 2 / 3;
-    width: 100%;
+    width: 90%;
   }
   
   /* Encabezado de la Sección de Estudiantes */
@@ -90,12 +100,13 @@
   
   /* Lista de Estudiantes */
   .students {
+    height: 100%;
     box-shadow: 0 0 20px -10px black;
     border: 1px solid #e7e8ec;
     width: 100%;
     max-height: 500px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: auto;
   }
   
   /* Botón para Añadir Estudiante */
@@ -123,7 +134,7 @@
   .tasksContainer {
     align-self: start;
     grid-column: 1 / 2;
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
   }
   
@@ -160,12 +171,13 @@
   
   /* Lista de Tareas */
   .tasks {
-    overflow-y: auto;
-    box-shadow: 0 0 20px -10px black;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-auto-rows: minmax(50px, auto);
     width: 100%;
+    height: 250px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow-y: auto;
   }
   
   /* Contenedor de Texto de Información de Tareas */
@@ -196,7 +208,27 @@
   /* Media Queries para Responsividad */
   
   /* Para pantallas de menos de 768px */
+
+  @media screen and (max-width: 1080px){
+    .groupInfo{
+      width: 100%;
+    }
+    .groupInfo > *{
+      width: 100%;
+    }
+  }
   @media screen and (max-width: 768px) {
+    .groupContainer{
+      height: 150vh;
+
+      gap: 0px;
+    }
+    .tasksContainer{
+      height: 15%;
+    }
+    .tasks{
+      height:90px;
+    }
     /* Contenedor del Grupo: cambiar a una columna */
     .groupContainer {
       grid-template-columns: 1fr;
@@ -261,6 +293,5 @@
   @media (max-width: 768px) {
   .groupContainer{
     width: 100%;
-    height: 100vh;
   }
   }

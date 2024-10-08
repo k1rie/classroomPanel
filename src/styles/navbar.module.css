@@ -10,7 +10,17 @@
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease-in-out;
-    z-index: 1000;
+    z-index: 100000;
+  }
+
+  .quitPhoneBar{
+    display: none;
+    color: white;
+    background-color: #007a87;
+    font-family: "Fredoka", sans-serif;
+    width: 100%;
+    border: none;
+    cursor: pointer;
   }
   
   /* Sidebar oculta (para móviles) */
@@ -82,6 +92,29 @@
     width: 30px;
     height: 30px;
   }
+  
+
+  .logOut{
+    background-color: transparent;
+    border: 2px solid;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  .logOut {
+    color: #007a87;
+    border-color: #007a87;
+  }
+
+  .logOut:hover {
+    background-color: #007a87;
+    color: #fff;
+  }
+  
   
   /* Ajustes Responsivos */
   @media (max-width: 768px) {
