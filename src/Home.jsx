@@ -133,7 +133,7 @@ if(direction === "Right"){
       <Form target="groups" input1Type="number" input1="Grado" input2="Grupo" input3="Especialidad" addGroup={addGroup} addForm ={addForm}/>
     <NavBar/>
     <div className={HomeStyles.homeContainer}>
-    <h1>Tasks Flow</h1>
+    <h1 >TPanel</h1>
     <div className={HomeStyles.groupsContainer}>
     <p className={HomeStyles.groupsTittle}>Grupos</p>
 <div className={HomeStyles.groupsCardsContainer}>

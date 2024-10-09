@@ -1,7 +1,37 @@
 h1{
   text-align: center;
   font-family: "Fredoka", sans-serif;
-  width: 100%;
+  font-size: 4em;
+  color: #333;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 2s ease-out forwards;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #222;
+  text-transform: uppercase;
+  border-bottom: 2px solid #333;
+  padding-bottom: 0.2em;
+}
+
+
+h1 {
+  font-size: 3em;
+  color: #333;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 2s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .homeContainer{

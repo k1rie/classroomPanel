@@ -1,0 +1,154 @@
+.container{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */}
+
+.attendanceContainer{
+    border-radius: 10px;
+    width: 25%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.headerContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr ;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    width: 100%;
+    height: 10%;
+    background-color: #007a87;
+}
+
+.headerContainer >p{
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+.attendances{
+    overflow-y: auto;
+    width: 100%;
+    height: 60%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-flow: row;
+    grid-auto-rows: 1fr;
+}
+
+.atendance{
+    align-items: center;
+    justify-items: center;
+    display: grid;
+    width: 100%;
+    height: 30px;
+    grid-template-columns: 50% 50% ;
+    grid-template-rows: 1fr;
+    gap: 10px;
+}
+
+.atendance>p{
+    margin: 0px;
+}
+
+.atendanceStatusImg{
+    width: 25px;
+    height: 25px;
+}
+
+.exitSVG{
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 83%;
+    top:  0%;
+    cursor: pointer;
+    z-index: 10000000;
+}
+
+.infoText{
+    width: 80%;
+}
+
+.headerContainerPermissions{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    width: 100%;
+    height: 10%;
+    background-color: #007a87;
+}
+
+.headerContainerPermissions >p{
+    width: 100%;
+    text-align: center;
+    color: white;
+}
+
+
+.permissions{
+    overflow-y: auto;
+    width: 100%;
+    height: 60%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    grid-auto-flow: row;
+    grid-auto-rows: 1fr;
+}
+
+.permission{
+    align-items: center;
+    justify-items: center;
+    display: grid;
+    width: 100%;
+    height: 30px;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 1fr;
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+
+    .exitSVG{
+        top: 5%;
+    }
+    
+    .container{
+        width: 100%;
+        left: -60%;
+        transform: translate(-50%, -50%);
+
+    }
+    .attendanceContainer {
+      width: 100%;
+     height: 80%;
+    }
+}
+
+@media screen and (max-width: 1450px) {
+
+    .container{
+        width: 100vw;
+        left: 50%;
+
+    }
+    .attendanceContainer {
+      width: 70%;
+     height: 80%;
+    }
+
+}

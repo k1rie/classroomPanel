@@ -5,6 +5,8 @@ import NavBar from "./components/Navbar"
 import StudentStyles from "./styles/student.module.css"
 import { useEffect, useState } from "react"
 import ConfirmDelete from "./components/ConfirmDelete.jsx"
+import AttendanceStudent from "./components/attendanceStudent.jsx"
+import CreatePermission from "./components/CreatePermission.jsx"
 
 
 const Student = ()=>{
@@ -23,6 +25,9 @@ const Student = ()=>{
     const [task,setTask] = useState([])
 
     const [tasks,setTasks] = useState([])
+    const [showAttendances,setShowAttendances] = useState(false)
+    const [showCreatePermissions,setShowCreatePermissions] = useState(false)
+
 
     const [form2,setForm2] = useState([])   
      const [form,setForm] = useState([])
@@ -215,6 +220,8 @@ getTasks()
 
     return(
         <div className={StudentStyles.container}>
+            <CreatePermission setShowCreatePermissions={setShowCreatePermissions} showCreatePermissions={showCreatePermissions} name={student.nombre} lastName={student.apellidos}/>
+            <AttendanceStudent showAttendancesSet={setShowAttendances} showAttendances={showAttendances} name={student.nombre} lastName={student.apellidos}/>
             <ConfirmDelete  addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
             <Form studentData={student} target="students" students={students} input1Type="text" input1="Nombre" input2="Apellidos" input3="Correo" addStudent ={addStudent}  addForm ={addForm2}/>
 
@@ -224,7 +231,16 @@ getTasks()
 
             <button className={StudentStyles.deleteStudent} onClick={confirmDeleteShow}>Eliminar Alumno</button>
             <button className={StudentStyles.editStudent} onClick={showCreateTask2}>Editar Alumno</button>
+            <button className={StudentStyles.attendanceStudent} onClick={()=>{
+                setShowAttendances(true)
+            }}>Asistencias</button>
+                                    <button className={StudentStyles.attendanceStudent} 
+                                    onClick={()=>{
+                                        setShowCreatePermissions(true)
+                                    }}>Generar Permiso</button>
+
             </div>
+            
 
 <div className={StudentStyles.studentCardsContainer}>
 <GroupCard students={`${student.nombre}`} area={student.correo} group={student.apellidos} />
