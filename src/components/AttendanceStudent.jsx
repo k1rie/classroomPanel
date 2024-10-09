@@ -75,9 +75,9 @@ useEffect(()=>{
 <div className={AttendanceStudentStyles.atendance}>
 {attendances.map((e)=>{
     if(e.attendance        === 1){
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at.slice(0, -14)}</p></>
     }else{
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={notCheckSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={notCheckSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at.slice(0, -14)}</p></>
 
     }
 })}
@@ -93,7 +93,7 @@ useEffect(()=>{
 <div className={AttendanceStudentStyles.permission}>
 {permissions.map((e)=>{
     if(e.permission === 1){
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p>{e.reason}</p> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p>{e.reason}</p> <p className={AttendanceStudentStyles.infoText}>{e.created_at.slice(0, -14)}</p></>
     }
 })}
 </div>
