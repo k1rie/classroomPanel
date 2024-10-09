@@ -30,7 +30,7 @@
     transition: background-color 0.3s, color 0.3s;
   }
   .attendanceStudents{
-    color: white;
+    color: var(--body_textColor);
   }
   
   /* Estilo específico para el botón 'Eliminar Grupo' */

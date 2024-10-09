@@ -36,7 +36,6 @@ const Student = ()=>{
     const [confirmDelete,setConfirmDelete] = useState([])
 
     const [showCreateAttendance,setShowCreateAttendance] = useState()
-    const [task,setTask] = useState([])
 
 
     
@@ -129,10 +128,12 @@ navigate(0)
                 "Content-Type": "application/json"
             }
         }).then(data=>data.json()).then(data=>{
-            if(data.length > 0){2
+            if(data.length > 0){
                 console.log(tasks)
                 setTasks(data)
                 
+            }else{
+                setTasks([])
             }
         }
         )
@@ -224,7 +225,6 @@ getTasks()
         <div className={StudentStyles.container}>
             <CreateAttendance setShowCreateAttendance={setShowCreateAttendance} showCreateAttendance={showCreateAttendance} name={(student.nombre !== undefined && student.nombre)} lastName={student.apellidos}/>
             <CreatePermission setShowCreatePermissions={setShowCreatePermissions} showCreatePermissions={showCreatePermissions} name={student.nombre} lastName={student.apellidos}/>
-            <AttendanceStudent showAttendancesSet={setShowAttendances} showAttendances={showAttendances} name={student.nombre} lastName={student.apellidos}/>
             <ConfirmDelete message="¿Estas seguro que quieres eliminar este alumno?"  addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
             <Form studentData={student} target="students" students={students} input1Type="text" input1="Nombre" input2="Apellidos" input3="Correo" addStudent ={addStudent}  addForm ={addForm2}/>
 
@@ -234,9 +234,6 @@ getTasks()
 
             <button className={StudentStyles.deleteStudent} onClick={confirmDeleteShow}>Eliminar Alumno</button>
             <button className={StudentStyles.editStudent} onClick={showCreateTask2}>Editar Alumno</button>
-            <button className={StudentStyles.attendanceStudent} onClick={()=>{
-                setShowAttendances(true)
-            }}>Asistencias</button>
                                     <button className={StudentStyles.attendanceStudent} 
                                     onClick={()=>{
                                         setShowCreatePermissions(true)

@@ -30,8 +30,12 @@ function App() {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data)
-        setGroups(data);
+     if(data.length > 0){
+      console.log(data)
+      setGroups(data);
+     }else{
+      setGroups([])
+     }
       });
   }
 

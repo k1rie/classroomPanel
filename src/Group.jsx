@@ -34,6 +34,7 @@ const Group = ()=>{
     const [groupData,setGroupData] = useState({})
     const [groupInfo,setGroupInfo] = useState({})
     const[showAttendances,setShowAttendances] = useState()
+  
     
 
     
@@ -92,8 +93,12 @@ const Group = ()=>{
                 },
 
             }).then(data=>data.json()).then(data=>{
+               if(data.length > 0){
                 console.log(data)
                 setTasks(data)
+               }else{
+                setTasks([])
+               }
             }
             )
         }
@@ -185,8 +190,13 @@ const Group = ()=>{
                 "Content-Type": "application/json"
             }
         }).then(data=>data.json())
-        .then((data)=>{setStudents(data)}).then(data=> {console.log(data)}
-    )
+        .then((data)=>{
+            if(data.length > 0){
+                setStudents(data)
+            }else{
+                setStudents([])
+            }
+        })
     }
 
     function addConfirmDelete (element){
@@ -314,7 +324,7 @@ return(
 <div className={GroupStyles.tasksContainer}>
 <button className={GroupStyles.taskButtonAdd} onClick={showCreateTask}>Crear Tarea</button>
 
-<Form target="tasks" students={students} input1Type="text" input1="Nombre" input2="Valor" input3="Calificación Final" addTask ={addTask}  addForm ={addForm2}/>
+<Form target="tasks" students={students} input1Type="text" input1="Nombre" input2="Valor" input3="Calificación Inicial" addTask ={addTask}  addForm ={addForm2}/>
 
 <div className={GroupStyles.taskInfo}>
 

@@ -54,7 +54,7 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
         <tbody>
           {tasks.length > 0 ? (
             tasks.map((task) => (
-              <tr key={task.id}>
+              <tr key={task.id} className={styles.tr}>
                 <td>{task.name}</td>
                 <td>{task.rate}</td>
                 <td>
@@ -70,7 +70,8 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
                     }}
                   />
 
-                  
+
+
                 </td>
                 <td>{task.final_rate !== null ? task.final_rate : 'No asignado'}</td> {/* Mostrar final_rate o un mensaje si es null */}
               </tr>

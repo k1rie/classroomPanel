@@ -9,7 +9,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #007a87;
-
 }
 
 .table {
@@ -24,7 +23,7 @@
 
 .th,
 .td {
-    padding: 12px 15px;
+    padding: 20px 15px; 
 }
 
 .th {
@@ -39,9 +38,10 @@
 }
 
 .tr {
+    margin-bottom: 20px;
     background-color: var(--body_background);
     border-bottom: 1px solid #333;
-
+    display: table-row;
 }
 
 .tr:hover {

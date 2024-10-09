@@ -5,7 +5,9 @@ import styles from '../styles/TasksTable.module.css'; // Importa los estilos com
 import { useNavigate } from 'react-router-dom';
 import { BASE_API_URL } from '../api';
 
-const TasksTable = ({ data, grade, group, area, students }) => {
+const TasksTable = ({ data,students }) => {
+  const [taskRate,setTaskRate] = useState()
+  const [taskName, setTaskName] = useState('');
   const [newNameTask, setNewNameTask] = useState('');
   const [newRateTask, setNewRateTask] = useState('');
   const [editingTaskId, setEditingTaskId] = useState(null); // Controla la edición de tareas
@@ -33,25 +35,31 @@ const TasksTable = ({ data, grade, group, area, students }) => {
   };
 
   // Función para cambiar el rate de la tarea
-  const changeRateTaskGroup = async (id, oldRate) => {
+  const changeRateTaskGroup = async (id) => {
     await fetch(BASE_API_URL + "/changeRateTaskGroup", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        grade,
-        group,
-        area,
         alumnosTask: students,
         newRate: newRateTask,
-        nameTask: oldRate,
+        nameTask: taskName,
+        rate: taskRate,
         idTask: id,
         emailUser: localStorage.getItem("email"),
         password: localStorage.getItem("password")
       })
     });
-
+console.log({
+  alumnosTask: students,
+  newRate: newRateTask,
+  nameTask: taskName,
+  rate: taskRate,
+  idTask: id,
+  emailUser: localStorage.getItem("email"),
+  password: localStorage.getItem("password")
+})
     setEditingRateId(null); // Ocultar el input después de guardar, pero sin actualizar el estado visual
   };
 
@@ -66,9 +74,6 @@ const TasksTable = ({ data, grade, group, area, students }) => {
         alumnosTask: students,
         id,
         nameTask: taskName,
-        grade,
-        group,
-        area,
         emailUser: localStorage.getItem("email"),
         password: localStorage.getItem("password")
       })
@@ -111,7 +116,9 @@ const TasksTable = ({ data, grade, group, area, students }) => {
                   <>
                     <input
                       value={newNameTask}
-                      onChange={(e) => setNewNameTask(e.target.value)}
+                      onChange={(e) => {setNewNameTask(e.target.value)
+                        setTaskName(task.name)
+                      }}
                       onKeyDown={(e) => handleNameKeyDown(e, task)} // Detecta "Enter"
                       className={styles.input}
                     />
@@ -146,7 +153,11 @@ const TasksTable = ({ data, grade, group, area, students }) => {
                   <>
                     <input
                       value={newRateTask}
-                      onChange={(e) => setNewRateTask(e.target.value)}
+                      onChange={(e) => {setNewRateTask(e.target.value)
+                        console.log(e.target.value)
+                        setTaskName(task.name)
+                        setTaskRate(task.rate)
+                      }}
                       onKeyDown={(e) => handleRateKeyDown(e, task)} // Detecta "Enter"
                       className={styles.input}
                     />
