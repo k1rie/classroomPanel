@@ -13,7 +13,7 @@ const Group = ()=>{
 
     const navigate = useNavigate()
 
-    const {id,area,grade,group} = useParams()
+    const {id} = useParams()
 
     const [students,setStudents] = useState([])
 
@@ -29,6 +29,7 @@ const Group = ()=>{
     const [confirmDelete,setConfirmDelete] = useState([])
     const [form3,setForm3] = useState([])
     const [groupData,setGroupData] = useState({})
+    const [groupInfo,setGroupInfo] = useState({})
     
 
     
@@ -49,14 +50,15 @@ const Group = ()=>{
             body: JSON.stringify({
                 nombre: task.nombre,
                 rate:task.rate,
-                grade:task.grade,
-                group:task.group,
-                area: task.area,
+                grade:groupInfo.grado,
+                group:groupInfo.grupo,
+                area: groupInfo.especialidad,
                 emailUser: localStorage.getItem("email"),
                 password: localStorage.getItem("password"),
-                alumnosTask: task.alumnosTask
+                alumnosTask: students,
+                groupId: id
             })
-        })
+        }).then(data=>data.json()).then(data=>console.log(data))
         }
         
         }
@@ -78,7 +80,7 @@ const Group = ()=>{
 
            function getTasksGroup(){
             const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-            fetch(`https://tasksflow-backend.onrender.com/getTasksGroup/${grade}/${group}/${area}`,{
+            fetch(`https://tasksflow-backend.onrender.com/getTasksGroup/${id}`,{
                 headers:{
                     'Authorization': `Basic ${credentials}`,
                     "Content-Type": "application/json"
@@ -131,26 +133,31 @@ const Group = ()=>{
                 body: JSON.stringify({
                     nombre: student.nombre,
                     apellidos: student.apellidos,
-                    grupo: student.grupo,
-                    grado: student.grado,
-                    especialidad: student.especialidad,
+                    grupo: groupInfo.grupo,
+                    grado: groupInfo.grado,
+                    especialidad: groupInfo.especialidad,
                     correo: student.correo,
                     emailUser: localStorage.getItem("email"),
-                    password: localStorage.getItem("password")
+                    password: localStorage.getItem("password"),
+                    groupId: id
                 })
-           }).then(data=>data.json())
+           }).then(data=>data.json()).then((data)=>{
+            console.log(data)
+            setStudents([...students,{
+                nombre: student.nombre,
+                apellidos: student.apellidos,
+                grupo: groupInfo.grupo,
+                grado: groupInfo.grado,
+                especialidad: groupInfo.especialidad,
+                correo: student.correo,
+                id:data.insertId,
+                groupId: id
+               }])
+           })
        
 
         
-           setStudents([...students,{
-            nombre: student.nombre,
-            apellidos: student.apellidos,
-            grupo: group,
-            grado: grade,
-            especialidad: area,
-            correo: student.correo,
-            id:data.insertId
-           }])
+           
 
        }
        
@@ -167,7 +174,7 @@ const Group = ()=>{
 
     function getStudents() {
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`,{
+        fetch(`https://tasksflow-backend.onrender.com/getStudents/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -192,7 +199,7 @@ const Group = ()=>{
                     emailUser: localStorage.getItem("email"),
                     password: localStorage.getItem("password")
                 })
-            })
+            }).then(data=>data.json()).then(data=>console.log(data))
             navigate("/")
 
         }
@@ -239,27 +246,40 @@ const Group = ()=>{
     newGroup: groupData.group,
     newArea: groupData.area,
     students: students,
-    grade: Number(grade),
-    group: group,
-    area: area,
+    grade: groupInfo.grado,
+    group: groupInfo.group,
+    area: groupInfo.especialidad,
     id:id,
     emailUser: localStorage.getItem("email"),
     password: localStorage.getItem("password")
 }
             )
         })
-        navigate(`/group/${id}/${groupData.area}/${groupData.grade}/${groupData.group}`) 
+        navigate(0) 
     }
        }
 
        
     useEffect(()=>{
-        console.log(student)
+        console.log(groupData)
         editGroup()
     },[groupData])
+
+    useEffect(()=>{
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getClassroom/${id}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            }
+        }).then(data=>data.json()).then((data)=>{setGroupInfo(data[0])
+console.log(data)
+
+        })
+    },[])
 return(
     <div className={GroupStyles.container}>
-<ConfirmDelete addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
+<ConfirmDelete message="¿Estas seguro que quieres eliminar este grupo?" addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
 <Form target="updateGroup" students={students} input1Type="text" input1="Grado" input2="Grupo" input3="Especialidad" getGroup ={getGroup}  addForm ={addForm3}/>
 
 <NavBar/>
@@ -270,10 +290,10 @@ return(
 
     <button className={GroupStyles.deleteGroup} onClick={confirmDeleteShow}>Eliminar Grupo</button>
     <button className={GroupStyles.editGroup} onClick={showCreateGroup}>Editar Grupo</button>
-    <ExportDataGroup/>
+    <ExportDataGroup grado={groupInfo.grado} grupo={groupInfo.grupo} especialidad={groupInfo.especialidad}/>
 </div>
     <div className={GroupStyles.groupInfo}>
-<GroupCard  students={`${grade} ${group}`} area={area} grade={grade} group={group}/>
+<GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
 </div>
 </div>
 
@@ -299,7 +319,7 @@ return(
 <div className={GroupStyles.tasks}>
 
 {tasks.map((e)=>{
-    return <InfoTask grade={grade} group={group} area={area} id={e.id} students={students} rate={e.rate} name={e.name}/>
+    return <InfoTask grade={groupData.grado} group={groupData.grupo} area={groupData.especialidad} id={e.id} students={students} rate={e.rate} name={e.name}/>
 })}
 
 
@@ -333,7 +353,7 @@ return(
 </div>
 <div className={GroupStyles.students}>
 {students.map((e,index)=>{
-    return (<InfoStudent lista ={index+1} idgroup={id} area={area} grade={grade} group={group} id={e.id} lastName={e.apellidos} firstName ={e.nombre} email={e.correo}/>)
+    return (<InfoStudent lista ={index+1} idgroup={id} area={groupData.area} grade={groupData.grade} group={groupData.group} id={e.id} lastName={e.apellidos} firstName ={e.nombre} email={e.correo}/>)
     
 })}
 </div>

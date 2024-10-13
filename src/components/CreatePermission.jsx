@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import exitSVG from "../assets/exit-svgrepo-com.svg"
 
 const CreatePermission = (props) => {
-    const {grade,group,area} = useParams()
+    const {id,grade,group,area} = useParams()
   const [reason, setReason] = useState('');
   const [date, setDate] = useState('');
   const correctText = useRef()
@@ -29,7 +29,8 @@ await fetch("https://tasksflow-backend.onrender.com/createPermission",{
         group:group,
         area: area,
         reason: reason,
-        date: date
+        date: date,
+id:id
     })
 }).then(data=>data.json()).then(data=>{
 if(data.response === true){

@@ -1,7 +1,7 @@
 import infoTaskStyle from "../styles/infotask.module.css"
 import editSvg from "../assets/pen-svgrepo-com (1).svg"
 import trashSvg from "../assets/trash-bin-trash-svgrepo-com.svg"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 
 
@@ -20,6 +20,9 @@ const InfoTask = (props)=>{
     const input2 = useRef()
     const text1 = useRef()
     const text2 = useRef()
+
+
+
 
     async function changeNameTask(){
         console.log(props.id)

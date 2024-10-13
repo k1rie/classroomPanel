@@ -63,9 +63,9 @@
     gap: 20px;
     justify-items: center;
     align-items: start;
-    width: 100vw;
+    width: 90vw;
     margin: 0 auto;
-    background-color: #f3f4f8;
+    background-color: var(--body_background);
 
   }
   
@@ -91,7 +91,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
     width: 100%;
-    border-bottom: 1px solid #e7e8ec;
+    border-bottom: var(--body_borderColor);
   }
   
   .studentsSection > p {
@@ -102,11 +102,11 @@
   .students {
     height: 100%;
     box-shadow: 0 0 20px -10px black;
-    border: 1px solid #e7e8ec;
+    border: var(--body_borderColor);
     width: 100%;
     max-height: 500px;
     overflow-y: auto;
-    overflow-x: auto;
+    overflow-x: hidden;
   }
   
   /* Botón para Añadir Estudiante */
@@ -171,12 +171,11 @@
   
   /* Lista de Tareas */
   .tasks {
-    width: 100%;
+    border: var(--body_borderColor);
     height: 250px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: var(--body_background);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-radius: 8px;
     overflow-y: auto;
   }
   
@@ -186,7 +185,6 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    border-bottom: 1px solid #e7e8ec;
   }
   
   .taskInfoTextContainer > p {
@@ -253,7 +251,7 @@
     .optionsStudentContainer,
     .studentsContainer,
     .tasksContainer {
-      width: 100%;
+      width: 100vw;
       max-width: 100%;
       margin: 0 auto;
     }
@@ -264,7 +262,7 @@
     }
   }
 
-  
+
 
   
   /* Para pantallas de menos de 480px */

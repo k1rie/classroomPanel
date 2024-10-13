@@ -1,23 +1,23 @@
+
+
 h1{
   text-align: center;
   font-family: "Fredoka", sans-serif;
   font-size: 4em;
-  color: #333;
+  color: var(--body_textColor);
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 2s ease-out forwards;
   font-weight: 600;
   letter-spacing: 0.1em;
-  color: #222;
   text-transform: uppercase;
-  border-bottom: 2px solid #333;
+  border-bottom: 2px solid var(--body_textColor);
   padding-bottom: 0.2em;
 }
 
 
 h1 {
   font-size: 3em;
-  color: #333;
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 2s ease-out forwards;
@@ -35,12 +35,15 @@ h1 {
 }
 
 .homeContainer{
+  background-color: var(--body_background);
   display: flex;
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 85%;
+  width: 90%;
 }
+
+
 
 .groupsContainer{
 
@@ -82,7 +85,7 @@ h1 {
   grid-column: 1/2;
   font-family: "Fredoka", sans-serif;
   font-size: 1.2rem;
-  color: #606771;
+  color: var(--body_textColor);
 }
 
 .groupsCreate{

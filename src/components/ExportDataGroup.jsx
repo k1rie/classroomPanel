@@ -1,13 +1,13 @@
 import { useParams } from "react-router-dom"
 import ExportDataGroupStyles from "../styles/exportdatagroup.module.css"
 
-const ExportDataGroup = ()=>{
+const ExportDataGroup = (props)=>{
 
-    const {grade,group,area} = useParams()
+    const {id} = useParams()
 
     function exportData(){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getDataList/${grade}/${group}/${area}`,{
+        fetch(`https://tasksflow-backend.onrender.com/getDataList/${id}/${props.grado}/${props.grupo}/${props.especialidad}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"
@@ -27,7 +27,7 @@ const ExportDataGroup = ()=>{
 
     return(
 <button className={ExportDataGroupStyles.buttonExport} onClick={exportData}>
-Export Data
+Exportar Calificaciones
 </button>
     )
 }

@@ -1,5 +1,6 @@
 .container{
-    width: 85vw;
+    background-color: var(--body_background);
+    width: 100vw;
     height: 100vh;
     display: flex;
 }
@@ -14,6 +15,19 @@
 }
 
 .correctSVG{
+    display: none;
     height:  20%;
     width: 20%;
+}
+
+.notCorrectSVG{
+    display: none;
+    height:  20%;
+    width: 20%;
+}
+
+@media (max-width: 900px) {
+.container{
+    width: 100vw;
+}
 }

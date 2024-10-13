@@ -5,7 +5,7 @@ import EditSvg from "../assets/pen-svgrepo-com (1).svg"
 
 const InfoStudent = (props)=>{
     return(
-<Link to={`/student/group/${props.idgroup}/${props.id}/${props.grade}/${props.group}/${props.area}`} className={InfoStudentStyles.container}>
+<Link to={`/student/group/${props.idgroup}/${props.id}`} className={InfoStudentStyles.container}>
 
 <p>{props.lista}</p>
 

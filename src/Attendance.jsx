@@ -1,57 +1,81 @@
 import { useParams } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import attendanceStyles from "./styles/attendance.module.css"
-import { useEffect } from "react"
-<<<<<<< HEAD
-
-const Attendance = ()=>{
-
-    const {lastname,name,grade,group,area,email} = useParams()
-
-    const attendance = ()=>{
-        fetch(`https://tasksflow-backend.onrender.com/attendance/${name}/${lastname}/${grade}/${group}/${area}/${email}`,{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-          
-        })
-=======
+import { useEffect, useRef, useState } from "react"
 import correctSVG from "./assets/check-circle-svgrepo-com.svg"
+import notCorrectSVG from "./assets/no-alt-svgrepo-com.svg"
 
 const Attendance = ()=>{
 
-    const {lastName,name,grade,group,area,email} = useParams()
+    const {id,lastName,name,grade,group,area,email} = useParams()
+    const [response,setResponse] = useState(false)
+    const [student,setStudent] = useState({})
+
+    const correctSVGHTML = useRef()
+    const notCorrectSVGHTML = useRef()
+
+    const getStudent = ()=>{
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`https://tasksflow-backend.onrender.com/getStudent/${id}`,{
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            }
+        }).then(data=>data.json()).then(data=>
+            setStudent(data[0])
+        )
+    }
 
     const attendance = ()=>{
         console.log(lastName)
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/attendance/${name}/${lastName}/${grade}/${group}/${area}/${email}`,{
+        fetch(`https://tasksflow-backend.onrender.com/attendance`,{
             method: "POST",
             headers: {
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                name:name,
+                lastName:lastName,
+                grade:grade,
+                group:group,
+                area: area,
+                id:id,
                 emailUser: localStorage.getItem("email")
             })
           
-        }).then(data=>data.json()).then(data=>console.log(data))
->>>>>>> 0162885 (permisos)
+        }).then(data=>data.json()).then(data=>setResponse(data.response))
     }
 
     useEffect(()=>{
         attendance()
+        getStudent()
     },[])
+
+    useEffect(()=>{
+if(response === true){
+    correctSVGHTML.current.style.display = "block"
+    notCorrectSVGHTML.current.style.display = "none"
+
+}
+
+if(response === false){
+    correctSVGHTML.current.style.display = "none"
+
+    notCorrectSVGHTML.current.style.display = "block"
+}
+    },[response])
 
     return(
         <div className={attendanceStyles.container}>
 
         <Navbar/>
 <div className={attendanceStyles.content}>
-<p>Alumno: {name} {lastName}</p>
-<p>{grade} {group} {area}</p>
-<img className={attendanceStyles.correctSVG}src={correctSVG}/>
+<p>Alumno: {student.nombre} {student.apellidos}</p>
+<p>{student.grado} {student.grupo} {student.especialidad}</p>
+<img ref={correctSVGHTML} className={attendanceStyles.correctSVG}src={correctSVG}/>
+<img ref={notCorrectSVGHTML} className={attendanceStyles.notCorrectSVG} src={notCorrectSVG}/>
 </div>
 </div>
 

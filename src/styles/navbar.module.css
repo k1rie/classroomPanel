@@ -4,7 +4,7 @@
     left: 0;
     width: 250px; /* Ancho fijo para la sidebar */
     height: 100vh;
-    background-color: #ffffff;
+    background-color: var(--body_navBackground);
     border-right: 1px solid #e4e4e5;
     display: flex;
     flex-direction: column;
@@ -33,6 +33,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
     padding-top: 20px;
   }
@@ -40,10 +41,12 @@
   /* Título del menú */
   .menuTittle {
     font-family: "Fredoka", sans-serif;
-    color: #555;
+    color: var(--body_textColor);
     font-size: 1.5rem;
     margin-bottom: 30px;
   }
+
+  
   
   /* Contenedor de opción */
   .optionContainer {
@@ -58,9 +61,7 @@
     cursor: pointer;
   }
   
-  .optionContainer:hover {
-    background-color: #f0f0f0;
-  }
+ 
   
   /* Ícono en la opción */
   .optionSvg {
@@ -71,7 +72,7 @@
   /* Título de la opción */
   .optionTittle {
     font-family: "Fredoka", sans-serif;
-    color: #333;
+    color: var(--body_textColor);
     font-size: 1.1rem;
     margin-left: 20px;
   }
@@ -95,7 +96,6 @@
   
 
   .logOut{
-    background-color: transparent;
     border: 2px solid;
     padding: 10px 20px;
     border-radius: 5px;
@@ -106,18 +106,79 @@
   }
 
   .logOut {
-    color: #007a87;
+    background-color: transparent;
+    color: #007a87; /* Azul */
     border-color: #007a87;
   }
-
+  
   .logOut:hover {
     background-color: #007a87;
     color: #fff;
   }
+
+  
+
+.switchModeContainer{
+  height: 100px;
+}
+
+  /* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  
+  background-color: #f3f4f8 ;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .5s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: 100%;
+  left: 10%;
+  bottom: 15%;
+  background-color: #fff000;
+  box-shadow: inset 0 0 0 8px #fff000;
+  transition: .5s;
+}
+
+input:checked + .slider {
+  --background: #28096b;
+  background-color: var(--background);
+}
+
+input:checked + .slider:before {
+  transform: translateX(100%);
+  box-shadow: inset 15px -4px 0px 15px #fff000;
+}
+
   
   
   /* Ajustes Responsivos */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     /* Mostrar el botón del menú */
     .menuButton {
       display: block;

@@ -31,7 +31,7 @@ showConfirmDelete()
     return(
         <div ref={element} className={ConfirmDeleteStyles.container}>
 <div className={ConfirmDeleteStyles.optionsContainer}>
-<p className={ConfirmDeleteStyles.advise}>¿Estas seguro que quieres eliminar este grupo?</p>
+<p className={ConfirmDeleteStyles.advise}>{props.message}</p>
 <button onClick={()=>{setConfirm(true)}}>Eliminar</button>
 <p className={ConfirmDeleteStyles.cancel} onClick={()=>{element.current.style.display="none"}}>Cancelar</p>
 </div>

@@ -16,7 +16,7 @@
   
   /* Estilo de la ventana modal */
   .optionsContainer {
-    background-color: #fff; /* Fondo blanco */
+    background-color: var(--body_background);
     padding: 20px;
     border-radius: 8px;
     text-align: center;
@@ -29,7 +29,8 @@
   .advise {
     font-size: 18px;
     margin-bottom: 20px;
-    color: #333;
+    color: var(--body_textColor);
+
     font-family: 'Fredoka', sans-serif;
   }
   

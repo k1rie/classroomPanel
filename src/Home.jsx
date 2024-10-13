@@ -11,6 +11,7 @@ import LoginForm from './components/LoginForm.jsx'
 
 function App(props) {
 
+
   const [groups,setGroups] = useState([])
   const [clicks,setClicks] = useState(0)
   const [direction,setDirection] = useState()
@@ -133,7 +134,7 @@ if(direction === "Right"){
       <Form target="groups" input1Type="number" input1="Grado" input2="Grupo" input3="Especialidad" addGroup={addGroup} addForm ={addForm}/>
     <NavBar/>
     <div className={HomeStyles.homeContainer}>
-    <h1 >TPanel</h1>
+    <h1 >e-Tareas</h1>
     <div className={HomeStyles.groupsContainer}>
     <p className={HomeStyles.groupsTittle}>Grupos</p>
 <div className={HomeStyles.groupsCardsContainer}>
@@ -142,7 +143,7 @@ if(direction === "Right"){
   <div ref={groupsContainer} className={HomeStyles.groups}>
 {groups.map( (e)=>{
   
-  return <GroupCard link={`/group/${e.id}/${e.especialidad}/${e.grado}/${e.grupo}`} info="Alumnos" addWidth={addWidth} getCardWidth={(width)=>getCardWidth(width)} students={e.alumnos} area={e.especialidad} grade={e.grado} group={e.grupo}/>
+  return <GroupCard link={`/group/${e.id}`} info="Alumnos" addWidth={addWidth} getCardWidth={(width)=>getCardWidth(width)} students={e.alumnos} area={e.especialidad} grade={e.grado} group={e.grupo}/>
 
 
 }

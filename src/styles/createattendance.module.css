@@ -14,11 +14,12 @@
 
 .exitSVG{
   filter: invert(var(--body_exitSVGColor));
-  width: 40px;
-  height: 40px;
-  position: fixed;
-  right: 83%;
-  top:  0%;
+
+    width: 40px;
+    height: 40px;
+    position: fixed;
+    right: 83%;
+    top:  5%;
     cursor: pointer;
     z-index: 10000000;
 }
@@ -37,8 +38,6 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
-
-
   
   .formGroup {
     width: 100%;
@@ -49,7 +48,6 @@
     display: block;
     font-size: 1rem;
     color: var(--body_textColor);
-    
     margin-bottom: 0.5rem;
   }
   
@@ -88,37 +86,48 @@
     color: green;
   }
 
-  @media (max-width: 768px) {
+  @media screen and (max-width: 1680px) {
+
+    .container{
+        width: 100vw;
+        left: 10%;
+
+    }
+    .attendanceContainer {
+      width: 70%;
+     height: 80%;
+    }
+
+
+}
+
+  @media (max-width:900px) {
 
     .exitSVG{
-      top:  10%;
+        top: 5%;
     }
     
+    .container{
+      width: 100%;
+      left: 0%;
+    }
+
     .formContainer {
       width: 100%;
    
     }
 }
 
+@media screen and (max-width: 1450px) {
 
-@media screen and (max-width: 1680px) {
-
-    .exitSVG{
-      right: 70%;
-    }
     .container{
-      width: 100vw;
+        width: 100vw;
+      
 
-  }
-  .formContainer {
-    width: 70%;
-  }
+    }
+    .formContainer {
+      width: 70%;
+  
+    }
 
 }
-
-@media (max-width: 768px) {
-  .container{
-    width: 100%;
-    transform: translate(-0%, -50%);
-  }
-  }

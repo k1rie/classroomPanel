@@ -9,7 +9,7 @@ const AttendanceStudent = (props)=>{
 
 
     const [attendances,setAtendances] = useState([])
-    const {grade,group,area} = useParams()
+    const {id,grade,group,area} = useParams()
     const container = useRef()
     const [permissions,setPermissions] = useState([])
 
@@ -17,12 +17,16 @@ const AttendanceStudent = (props)=>{
    
         console.log(props)
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudentAttendance/${props.name}/${props.lastName}/${grade}/${group}/${area}`,{
+        fetch(`https://tasksflow-backend.onrender.com/getStudentAttendance/${id}`,{
        headers:{
           'Authorization': `Basic ${credentials}`,
                     "Content-Type":"application/json"
        }
-    }).then(data=>data.json()).then(data=>setAtendances(data))
+    }).then(data=>data.json()).then(data=>{
+        if(data.length > 0){
+            setAtendances(data)
+        }
+    })
 
 }
 
@@ -30,12 +34,19 @@ const getPermissions= ()=>{
    
     console.log(props)
     const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-    fetch(`https://tasksflow-backend.onrender.com/getPermissions/${props.name}/${props.lastName}/${grade}/${group}/${area}`,{
+    fetch(`https://tasksflow-backend.onrender.com/getPermissions/${id}`,{
    headers:{
       'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"
    }
-}).then(data=>data.json()).then(data=>    setPermissions(data))
+}).then(data=>data.json()).then(data=>    {
+    console.log(data)
+
+    if(data.length > 0){
+        console.log(data)
+        setPermissions(data)
+    }
+})
 
 }
 
@@ -75,9 +86,9 @@ useEffect(()=>{
 <div className={AttendanceStudentStyles.atendance}>
 {attendances.map((e)=>{
     if(e.attendance        === 1){
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.date.slice(0, -14)}</p></>
     }else{
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={notCheckSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={notCheckSVG}/> <p className={AttendanceStudentStyles.infoText}>{e.date.slice(0, -14)}</p></>
 
     }
 })}
@@ -93,7 +104,7 @@ useEffect(()=>{
 <div className={AttendanceStudentStyles.permission}>
 {permissions.map((e)=>{
     if(e.permission === 1){
-        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p>{e.reason}</p> <p className={AttendanceStudentStyles.infoText}>{e.created_at}</p></>
+        return   <> <img className={AttendanceStudentStyles.atendanceStatusImg} src={checkSVG}/> <p>{e.reason}</p> <p className={AttendanceStudentStyles.infoText}>{e.created_at.slice(0, -14)}</p></>
     }
 })}
 </div>

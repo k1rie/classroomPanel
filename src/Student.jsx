@@ -7,22 +7,22 @@ import { useEffect, useState } from "react"
 import ConfirmDelete from "./components/ConfirmDelete.jsx"
 import AttendanceStudent from "./components/attendanceStudent.jsx"
 import CreatePermission from "./components/CreatePermission.jsx"
+import CreateAttendance from "./components/CreateAttendance.jsx"
 
 
 const Student = ()=>{
 
     const navigate = useNavigate()
 
-    const {idgroup,id,group,grade,area} = useParams()
+    const {idgroup,id} = useParams()
 
-    const [student,setStudent] = useState({})
+    const [student,setStudent] = useState({nombre: "none"})
 
     const [students,setStudents] = useState({})
 
     const [studentData,setStudentData] = useState([])
 
 
-    const [task,setTask] = useState([])
 
     const [tasks,setTasks] = useState([])
     const [showAttendances,setShowAttendances] = useState(false)
@@ -38,6 +38,8 @@ const Student = ()=>{
 
 
     const [confirmDelete,setConfirmDelete] = useState([])
+
+    const [showCreateAttendance,setShowCreateAttendance] = useState()
 
     
     
@@ -63,7 +65,8 @@ const Student = ()=>{
                     apellidos: studentData.apellidos,
                     correo: studentData.correo,
                     emailUser: localStorage.getItem("email"),
-                    password: localStorage.getItem("password")
+                    password: localStorage.getItem("password"),
+                    groupId: idgroup
                 })
            }).then(data=>data.json())
        
@@ -80,7 +83,7 @@ navigate(0)
     },[studentData])
 
     
-    async function addTaskDB(){
+    async function addTaskDB(task){
         if(student.length !== 0){
          console.log("studentaaa")
          console.log(student)
@@ -91,7 +94,17 @@ navigate(0)
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(task)
+            body: JSON.stringify({
+                nombre: task.nombre,
+                rate:task.rate,
+                grade:task.grade,
+                group:task.group,
+                area: task.area,
+                emailUser: localStorage.getItem("email"),
+                password: localStorage.getItem("password"),
+                alumnosTask: students,
+                groupId: idgroup
+            })
         }).then(data=>data.json()).then(data=>console.log(data))
         }
         
@@ -116,8 +129,11 @@ navigate(0)
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
             }
-        }).then(data=>data.json()).then(data=>
-            setTasks(data)
+        }).then(data=>data.json()).then(data=>{
+            if(data.length > 0){
+                setTasks(data)
+            }
+        }
         )
     }
 
@@ -129,7 +145,8 @@ navigate(0)
                }
 
            function addTask(task){
-            setTask(task)
+          
+            addTaskDB(task)
         console.log(task)
            }
 
@@ -144,7 +161,7 @@ navigate(0)
 
            function getStudents() {
             const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-            fetch(`https://tasksflow-backend.onrender.com/getStudents/${area}/${grade}/${group}`,{
+            fetch(`https://tasksflow-backend.onrender.com/getStudents/${idgroup}`,{
                 headers:{
                     'Authorization': `Basic ${credentials}`,
                     "Content-Type":"application/json"
@@ -155,12 +172,7 @@ navigate(0)
         }
     
 
-           useEffect(()=>{
-            console.log(task)
-            addTaskDB()
-            
-        },[task])
-
+      
         function addConfirmDelete (element){
             setConfirmDelete(element)
         }
@@ -175,11 +187,12 @@ navigate(0)
                         "Content-Type":"application/json"
                     },
                     body:JSON.stringify({
+                        groupId: idgroup,
                         emailUser: localStorage.getItem("email"),
                         password: localStorage.getItem("password")
                     })
                 })
-                navigate(`/group/${id}/${area}/${grade}/${group}`)
+                navigate(`/group/${idgroup}`)
     
             }
         }
@@ -220,9 +233,10 @@ getTasks()
 
     return(
         <div className={StudentStyles.container}>
+            <CreateAttendance setShowCreateAttendance={setShowCreateAttendance} showCreateAttendance={showCreateAttendance} name={(student.nombre !== undefined && student.nombre)} lastName={student.apellidos}/>
             <CreatePermission setShowCreatePermissions={setShowCreatePermissions} showCreatePermissions={showCreatePermissions} name={student.nombre} lastName={student.apellidos}/>
             <AttendanceStudent showAttendancesSet={setShowAttendances} showAttendances={showAttendances} name={student.nombre} lastName={student.apellidos}/>
-            <ConfirmDelete  addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
+            <ConfirmDelete message="¿Estas seguro que quieres eliminar este alumno?"  addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
             <Form studentData={student} target="students" students={students} input1Type="text" input1="Nombre" input2="Apellidos" input3="Correo" addStudent ={addStudent}  addForm ={addForm2}/>
 
             <NavBar/>
@@ -239,12 +253,17 @@ getTasks()
                                         setShowCreatePermissions(true)
                                     }}>Generar Permiso</button>
 
+<button className={StudentStyles.attendanceStudent} 
+                                    onClick={()=>{
+                                        setShowCreateAttendance(true)
+                                    }}>Generar Asistencia</button>
+
             </div>
             
 
 <div className={StudentStyles.studentCardsContainer}>
 <GroupCard students={`${student.nombre}`} area={student.correo} group={student.apellidos} />
-<GroupCard link={`/group/${id}/${area}/${grade}/${group}`} students={group} area={area} group={grade} />
+<GroupCard link={`/group/${idgroup}`} students={student.grupo} area={student.especialidad} group={student.grado} />
 
 </div>
 <div className={StudentStyles.tasksContainer}>

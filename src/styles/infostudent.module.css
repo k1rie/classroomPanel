@@ -4,9 +4,10 @@
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 1fr;
     justify-items:center;
+    gap:4px;
     width: 100%;
     height: 60px;
-    border-bottom: 1px solid #e7e8ec;
+    border-bottom: var(--body_borderColor);
     transition: 0.5s all;
 }
 
@@ -17,4 +18,5 @@ transform: scale(1.2);
 .email{
     width: 100%;
     overflow-wrap: break-word;
+    margin: 0px;
 }
