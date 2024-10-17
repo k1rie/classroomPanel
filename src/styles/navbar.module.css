@@ -65,6 +65,7 @@
   
   /* Ícono en la opción */
   .optionSvg {
+    filter: invert(var(--body_svgColor));
     height: 25px;
     width: 25px;
   }

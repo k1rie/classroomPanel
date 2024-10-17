@@ -7,6 +7,7 @@
   --body_textColor: black;
   --body_buttonBackground: none;
   --body_exitSVGColor: 0%;
+  --body_svgColor: 0%;
   --body_boxShadow: 0px 0px 10px -8px black;
   --body_cardBackground: #fff;
 }
@@ -15,6 +16,7 @@
   --body_borderColor: 1px solid #323234;
   --body_cardBorder: none;
   --body_exitSVGColor: 100%;
+  --body_svgColor: 100%;
   --body_background: #1a191e;
   --body_buttonBackground: #007a87;
   --body_navBackground: #323234 ;
@@ -22,6 +24,21 @@
   --body_textColor: white;
   --body_boxShadow: none;
 }
+
+/* Cambiar el color de las flechas */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #007a87; /* Cambia 'blue' por el color que desees */
+}
+
+/* Cambiar el tamaño de las flechas */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 24px; /* Cambia el tamaño según tus necesidades */
+}
+
+/* Cambiar el icono de las flechas */
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document

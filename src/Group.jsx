@@ -8,6 +8,7 @@ import {useParams, useNavigate } from "react-router-dom"
 import ConfirmDelete from "./components/ConfirmDelete.jsx"
 import InfoTask from "./components/InfoTask.jsx"
 import ExportDataGroup from "./components/ExportDataGroup.jsx"
+import StudentsTable from "./components/StudentsTable.jsx"
 
 const Group = ()=>{
 
@@ -330,33 +331,8 @@ return(
 <div className={GroupStyles.studentsContainer}>
 <p className={GroupStyles.addStudentButton} onClick={showCreateStudentForm}>Añadir Alumno</p>
 <Form key={2} target="students" input1Type="text" input1="Nombre" input2="Apellidos" input3="Email" addStudent ={addStudent}  addForm ={addForm}/>
-<div className={GroupStyles.studentsInfoContainer}>
+<StudentsTable data={students} />
 
-<div className={GroupStyles.studentsSection}>
-<p className={GroupStyles.info}>Lista</p>
-</div>
-
-<div className={GroupStyles.studentsSection}>
-<p className={GroupStyles.info}>Apellidos</p>
-</div>
-
-
-<div className={GroupStyles.studentsSection}>
-<p className={GroupStyles.info}>Nombre (s)</p>
-</div>
-
-
-<div className={GroupStyles.studentsSection}>
-<p className={GroupStyles.info}>Correo</p>
-</div>
-
-</div>
-<div className={GroupStyles.students}>
-{students.map((e,index)=>{
-    return (<InfoStudent lista ={index+1} idgroup={id} area={groupData.area} grade={groupData.grade} group={groupData.group} id={e.id} lastName={e.apellidos} firstName ={e.nombre} email={e.correo}/>)
-    
-})}
-</div>
 
 </div>
 </div>

@@ -9,7 +9,7 @@ const Attendance = ()=>{
 
     const {id,lastName,name,grade,group,area,email} = useParams()
     const [response,setResponse] = useState(false)
-    const [student,setStudent] = useState({})
+    const [student,setStudent] = useState({nombre:""})
 
     const correctSVGHTML = useRef()
     const notCorrectSVGHTML = useRef()

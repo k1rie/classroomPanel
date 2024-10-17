@@ -1,184 +1,120 @@
-import { useEffect, useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import HomeStyles from './styles/home.module.css'
-import NavBar from './components/Navbar'
-import GroupCard from './components/GroupCard'
-import ArrowRightSvg from "./assets/arrow-sm-right-svgrepo-com.svg"
-import ArrowLeftSvg from "./assets/arrow-sm-left-svgrepo-com.svg"
-import Form  from './components/Form.jsx'
-import LoginForm from './components/LoginForm.jsx'
+import { useEffect, useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import HomeStyles from './styles/home.module.css';
+import NavBar from './components/Navbar';
+import GroupCard from './components/GroupCard';
+import Form from './components/Form.jsx';
+import LoginForm from './components/LoginForm.jsx';
+
+// Importa los componentes y estilos de Swiper
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 
 function App(props) {
+  const [groups, setGroups] = useState([]);
+  const [form, setForm] = useState();
 
-
-  const [groups,setGroups] = useState([])
-  const [clicks,setClicks] = useState(0)
-  const [direction,setDirection] = useState()
-  const [width,setWidth] = useState([])
-  const [form,setForm] = useState()
-  const [newGroup,setNewGroup] = useState({
- })
-  const groupsContainer = useRef(null)
-  const card = useRef()
-
-  function addWidth(width){
-console.log(width)
-setWidth(width)
+  async function getGroups() {
+    const credentials = btoa(`${localStorage.getItem('email')}:${localStorage.getItem('password')}`);
+    await fetch('https://tasksflow-backend.onrender.com/getClassrooms', {
+      headers: {
+        Authorization: `Basic ${credentials}`,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        setGroups(data);
+      });
   }
 
-
-  async function getGroups (){
-    const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-    await fetch("https://tasksflow-backend.onrender.com/getClassrooms",{
-      headers:{
-        'Authorization': `Basic ${credentials}`,
-        "Content-Type": "application/json"
-      }
-    })
-    .then(data=>data.json()).then(data=>{
-
-        console.log("aaa")
- 
-        setGroups(data)  
-      
-    
-    })
-   
-
+  function addForm(form) {
+    setForm(form);
   }
 
-  function moveRight(){
-    console.log(clicks)
-if(groupsContainer.current !== null && groups.length > clicks && clicks > 0){
-  groupsContainer.current.style.marginLeft = `-${(width*clicks)}px`
+  function showCreateGroupForm() {
+    form.style.display = 'flex';
+  }
 
-}
-if(clicks === 0){
-  groupsContainer.current.style.marginLeft = `-${(width*clicks)}px`
+  function addGroup(group) {
+    setGroups([
+      ...groups,
+      {
+        grado: group.grado,
+        grupo: group.grupo,
+        especialidad: group.especialidad,
+        alumnos: 0,
+        id: group.idGroup,
+      },
+    ]);
+  }
 
-}
+  useEffect(() => {
+    getGroups();
+  }, []);
 
-
-   }
-
-   function moveLeft(){
-    console.log(clicks)
-    if(groupsContainer.current !== null && clicks > 0){
-      groupsContainer.current.style.marginLeft = `-${(width*clicks)}px`
-      
-    }
-    if(clicks === 0){
-      groupsContainer.current.style.marginLeft = `-${(width*clicks)}px`
-    
-    }
-
-
-    console.log(clicks)
-   }
-
-   function addForm(form){
-    setForm(form)
-console.log(form)
-   }
-
-   function showCreateGroupForm(){
-form.style.display ="flex"
-   }
-
-
-
-    function addGroup(group){
-
-setGroups(
-[...groups,{
-  grado: group.grado,
-  grupo: group.grupo,
-  especialidad: group.especialidad,
-  alumnos: 0,
-  id: group.idGroup
-}]
-)
-console.log(`insertid: ${group.idGroup}`)
-   }
-
-  
-   useEffect(()=>{
-    getGroups()
-   },[])
-   
-   useEffect(()=>{
-if(direction === "Right"){
-  moveRight()
-}else{
-  moveLeft()
-}
-   },[clicks,direction])
-   
-
-   
-
-
-
-  
-  
-  return(
+  return (
     <div className={HomeStyles.container}>
-    {
-    localStorage.getItem("email") ? (
-       console.log("n")
-    ) : (
-      <LoginForm/>
-    )
-    }
-      <Form target="groups" input1Type="number" input1="Grado" input2="Grupo" input3="Especialidad" addGroup={addGroup} addForm ={addForm}/>
-    <NavBar/>
-    <div className={HomeStyles.homeContainer}>
-    <h1 >e-Tareas</h1>
-    <div className={HomeStyles.groupsContainer}>
-    <p className={HomeStyles.groupsTittle}>Grupos</p>
-<div className={HomeStyles.groupsCardsContainer}>
-<button className={HomeStyles.groupsCreate} onClick={showCreateGroupForm}>Crear Grupo</button>
-
-  <div ref={groupsContainer} className={HomeStyles.groups}>
-{groups.map( (e)=>{
-  
-  return <GroupCard link={`/group/${e.id}`} info="Alumnos" addWidth={addWidth} getCardWidth={(width)=>getCardWidth(width)} students={e.alumnos} area={e.especialidad} grade={e.grado} group={e.grupo}/>
-
-
-}
-   )}
-
-</div>
-</div>
-
-<div className={`${HomeStyles.arrowSvgContainer} ${HomeStyles.arrowLeftContainer}`} onClick={()=>
-  {
-    setDirection("Left")
- if(clicks > 0){
-  setClicks(clicks-1)}
- }
-}
-  >
-<img className={HomeStyles.arrowSvg} src={ArrowLeftSvg}/>
-</div >
-
-<div className={HomeStyles.arrowSvgContainer} onClick={()=>
-  {
-    setDirection("Right")
-  if(clicks < groups.length-1){
-    setClicks(clicks+1)
-  }
-}
-
-}
-  >
-<img className={HomeStyles.arrowSvg} src={ArrowRightSvg}/>
-</div >
+      {localStorage.getItem('email') ? console.log('n') : <LoginForm />}
+      <Form
+        target="groups"
+        input1Type="number"
+        input1="Grado"
+        input2="Grupo"
+        input3="Especialidad"
+        addGroup={addGroup}
+        addForm={addForm}
+      />
+      <NavBar />
+      <div className={HomeStyles.homeContainer}>
+        <h1>e-Tareas</h1>
+        <div className={HomeStyles.groupsContainer}>
+          <p className={HomeStyles.groupsTittle}>Grupos</p>
+          <div className={HomeStyles.groupsCardsContainer}>
+            <button className={HomeStyles.groupsCreate} onClick={showCreateGroupForm}>
+              Crear Grupo
+            </button>
+            
+            <Swiper
+              modules={[Navigation]} // Incluye el módulo de navegación si lo deseas
+              navigation // Habilita la navegación
+              spaceBetween={50}
+              slidesPerView={3}
+              breakpoints={{
+                // Cuando el ancho de la pantalla sea menor o igual a 600px
+                0: {
+                  slidesPerView: 1, // Mostrar 1 tarjeta
+                  spaceBetween: 10,
+                },
+                // Cuando el ancho de la pantalla sea mayor a 600px
+                601: {
+                  slidesPerView: 3, // Mostrar 3 tarjetas
+                  spaceBetween: 30,
+                },
+              }}
+            >
+              {groups.map((e) => (
+                <SwiperSlide key={e.id}>
+                  <GroupCard
+                    link={`/group/${e.id}`}
+                    info="Alumnos"
+                    students={e.alumnos}
+                    area={e.especialidad}
+                    grade={e.grado}
+                    group={e.grupo}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      </div>
     </div>
-    </div>
-    </div>
-  )
+  );
 }
 
-export default App
+export default App;

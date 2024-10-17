@@ -1,0 +1,49 @@
+/* StudentsTable.module.css */
+
+.table-container {
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #007a87;
+    max-height: 300px; /* Ajusta esta altura según tus necesidades */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Fredoka', sans-serif;
+    background-color: var(--body_background);
+    color: white;
+  }
+  
+  .th {
+    background-color: #007a87;
+    color: white;
+    font-weight: 300;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0; /* Hace que el encabezado se mantenga en la parte superior */
+    z-index: 1; /* Asegura que el encabezado se superponga sobre las filas */
+    padding: 12px 15px;
+  }
+  
+  .td {
+    padding: 12px 15px;
+    color: var(--body_textColor);
+    border-bottom: 1px solid #333;
+  }
+  
+  .tr {
+    background-color: var(--body_background);
+
+  }
+  
+  .tr:nth-child(even) {
+    background-color: var(--body_background);
+
+  }
+  
+  .tr:hover {
+    background-color: #333;
+  }
+  

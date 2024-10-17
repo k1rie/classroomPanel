@@ -11,7 +11,7 @@ p {
     grid-template-rows: auto 1fr;
     width: 300px;
     max-width: 100%;
-    height: 200px;
+    height: 230px;
     background-color: var(--body-cardBackground);
     border: var(--body_cardBorder);
     box-shadow: var(--body_boxShadow);

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import NavBarStyles from '../styles/navbar.module.css';
 import HomeSvg from '../assets/home-angle-2-svgrepo-com.svg'; // Asegúrate de importar correctamente tu SVG
+import ScannerSvg from "../assets/scanner-svgrepo-com.svg"
 
 const Navbar = () => {
 
@@ -124,6 +125,22 @@ toggleThemeElement.current.checked = "true"
             <img className={NavBarStyles.optionSvg} src={HomeSvg} alt="Home" />
             <p className={NavBarStyles.optionTittle}>Home</p>
           </Link>
+
+          <Link
+            to="/scanner"
+            className={NavBarStyles.optionContainer}
+            onClick={(e) => {
+              focusOption(e);
+              if (window.innerWidth <= 768) {
+                setIsOpen(false);
+              }
+            }}
+          >
+
+            <img className={NavBarStyles.optionSvg} src={ScannerSvg} alt="Home" />
+            <p className={NavBarStyles.optionTittle}>Scanner</p>
+          </Link>
+
           <div className={NavBarStyles.switchModeContainer}>
 <label className={NavBarStyles.switch}>
     <input ref={toggleThemeElement} type="checkbox"  onChange={toggleTheme}/>
