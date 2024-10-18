@@ -9,6 +9,7 @@
   }
   
   .table {
+    text-align: center;
     width: 100%;
     border-collapse: collapse;
     font-family: 'Fredoka', sans-serif;

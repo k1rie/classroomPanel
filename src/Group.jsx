@@ -9,6 +9,8 @@ import ConfirmDelete from "./components/ConfirmDelete.jsx"
 import InfoTask from "./components/InfoTask.jsx"
 import ExportDataGroup from "./components/ExportDataGroup.jsx"
 import StudentsTable from "./components/StudentsTable.jsx"
+import TasksTable from "./components/TasksTable.jsx"
+import ExportAllDataGroup from "./components/ExportAllDataGroup.jsx"
 
 const Group = ()=>{
 
@@ -292,6 +294,7 @@ return(
     <button className={GroupStyles.deleteGroup} onClick={confirmDeleteShow}>Eliminar Grupo</button>
     <button className={GroupStyles.editGroup} onClick={showCreateGroup}>Editar Grupo</button>
     <ExportDataGroup grado={groupInfo.grado} grupo={groupInfo.grupo} especialidad={groupInfo.especialidad}/>
+    <ExportAllDataGroup/>
 </div>
     <div className={GroupStyles.groupInfo}>
 <GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
@@ -306,26 +309,12 @@ return(
 <div className={GroupStyles.taskInfo}>
 
 
-<div className={GroupStyles.taskInfoTextContainer}>
-
-<p className={GroupStyles.taskInfoText}>Tarea</p>
 </div>
 
-
-<div className={GroupStyles.taskInfoTextContainer}>
-<p className={GroupStyles.taskInfoText}>Valor</p>
-</div>
-
-</div>
-<div className={GroupStyles.tasks}>
-
-{tasks.map((e)=>{
-    return <InfoTask grade={groupData.grado} group={groupData.grupo} area={groupData.especialidad} id={e.id} students={students} rate={e.rate} name={e.name}/>
-})}
+<TasksTable data={tasks}/>
 
 
 
-</div>
 </div>
 
 <div className={GroupStyles.studentsContainer}>

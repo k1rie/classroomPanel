@@ -8,6 +8,7 @@ import ConfirmDelete from "./components/ConfirmDelete.jsx"
 import AttendanceStudent from "./components/attendanceStudent.jsx"
 import CreatePermission from "./components/CreatePermission.jsx"
 import CreateAttendance from "./components/CreateAttendance.jsx"
+import TaskGradesTable from "./components/TaskGradesTable.jsx"
 
 
 const Student = ()=>{
@@ -31,11 +32,6 @@ const Student = ()=>{
 
     const [form2,setForm2] = useState([])   
      const [form,setForm] = useState([])
-
-     const [newRate,setNewRate] = useState(0)
-
-     const [taskName,setTaskName] = useState("")
-
 
     const [confirmDelete,setConfirmDelete] = useState([])
 
@@ -130,7 +126,8 @@ navigate(0)
                 "Content-Type": "application/json"
             }
         }).then(data=>data.json()).then(data=>{
-            if(data.length > 0){
+            if(data.length > 0){2
+                console.log(tasks)
                 setTasks(data)
             }
         }
@@ -203,27 +200,7 @@ navigate(0)
         }
 
 
-        async function changeFinalRate(){
-            console.log("aaa")
-            await fetch(`https://tasksflow-backend.onrender.com/changeRateTask`,{
-                method: "PATCH",
-                headers:{
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    newRate:Number(newRate),
-                    idStudent: Number(id),
-                    taskName: taskName,
-                    emailUser: localStorage.getItem("email"),
-                    password: localStorage.getItem("password")
-                })
-            })
-           
-            console.log(newRate)
-            navigate(0)
-        }
-
-      
+       
 
     useEffect(()=>{
         getStudents()
@@ -270,46 +247,13 @@ getTasks()
 <button className={StudentStyles.taskButtonAdd} onClick={showCreateTask}>Crear Tarea</button>
 <Form target="tasks" students={students} input1Type="text" input1="Nombre" input2="Valor" input3="Calificación Final" addTask ={addTask}  addForm ={addForm}/>
 
-<div className={StudentStyles.taskInfo}>
 
 
-<div className={StudentStyles.taskInfoTextContainer}>
-
-<p className={StudentStyles.taskInfoText}>Tarea</p>
-</div>
-
-<div className={StudentStyles.taskInfoTextContainer}>
-<p className={StudentStyles.taskInfoText}>Valor</p>
-</div>
-
-<div className={StudentStyles.taskInfoTextContainer}>
-<p className={StudentStyles.taskInfoText}>Porcentaje</p>
-</div>
-<div className={StudentStyles.taskInfoTextContainer}>
-<p className={StudentStyles.taskInfoText}>Calificación Final</p>
-</div>
-
-</div>
-<div className={StudentStyles.tasks}>
-
-{tasks.map((e)=>{
-    return <><div className={StudentStyles.task}> <p>{e.name}</p> <p>{e.rate}</p> <input onChange={((eListener)=>{
-        setTaskName(e.name)
-        setNewRate((eListener.target.value*e.rate)/100)
-    })} onKeyUp={(eListener)=>{
-        if(eListener.key === "Enter"){
-            
-            changeFinalRate()
-            console.log(newRate)
-
-        }
-    }} type="number"/> <p>{e.final_rate}</p> </div></>
-})}
-
+<TaskGradesTable tasksData={tasks} studentId={id} />
 
 
 </div>
-</div>
+
 
             </div>
             

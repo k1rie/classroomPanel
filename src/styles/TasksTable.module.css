@@ -1,0 +1,77 @@
+.table-container {
+    font-family: 'Fredoka', sans-serif;
+    background-color: var(--body_background);
+    height: 300px;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #007a87;
+  }
+
+  .th{
+    background-color: #007a87;
+    color: white;
+    text-transform: uppercase;
+    position: sticky;
+    top: 0; /* Hace que el encabezado se mantenga en la parte superior */
+    z-index: 1; /* Asegura que el encabezado se superponga sobre las filas */
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  .th,
+  .td {
+    text-align: center;
+    padding: 12px 15px;
+  }
+  
+  .th {
+    background-color: #007a87;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    position: sticky; /* Hace que el encabezado se mantenga fijo */
+    top: 0; /* Pegado a la parte superior */
+    z-index: 1; /* Asegura que el encabezado quede por encima de las celdas de datos */
+  }
+  
+  
+  .tr {
+    background-color: var(--body_background);
+color: var(--body_textColor);
+    border-bottom: 1px solid #333;
+  }
+  
+
+  
+  .tr:hover {
+    background-color: #333;
+  }
+  
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .icon-button img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .input {
+    padding: 5px;
+    margin-right: 10px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+  }
+  
