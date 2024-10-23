@@ -9,7 +9,7 @@ import AttendanceStudent from "./components/attendanceStudent.jsx"
 import CreatePermission from "./components/CreatePermission.jsx"
 import CreateAttendance from "./components/CreateAttendance.jsx"
 import TaskGradesTable from "./components/TaskGradesTable.jsx"
-
+import { BASE_API_URL } from "./api/index.js"
 
 const Student = ()=>{
 
@@ -24,7 +24,7 @@ const Student = ()=>{
     const [studentData,setStudentData] = useState([])
 
 
-
+    const [tasksTotal,setTasksTotal] = useState(0) 
     const [tasks,setTasks] = useState([])
     const [showAttendances,setShowAttendances] = useState(false)
     const [showCreatePermissions,setShowCreatePermissions] = useState(false)
@@ -36,6 +36,8 @@ const Student = ()=>{
     const [confirmDelete,setConfirmDelete] = useState([])
 
     const [showCreateAttendance,setShowCreateAttendance] = useState()
+    const [task,setTask] = useState([])
+
 
     
     
@@ -51,7 +53,7 @@ const Student = ()=>{
         console.log("aqui")
 
         console.log(studentData)
-        const data = await fetch(`https://tasksflow-backend.onrender.com/updateStudent/${id}`,{
+        const data = await fetch(`${BASE_API_URL}/updateStudent/${id}`,{
             method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,13 +81,15 @@ navigate(0)
     },[studentData])
 
     
+    
     async function addTaskDB(task){
-        if(student.length !== 0){
+        if(students.length !== 0){
          console.log("studentaaa")
          console.log(student)
          setTasks([...tasks,task])
-         
-        await fetch("https://tasksflow-backend.onrender.com/createTask",{
+         console.log("aaatasks")
+         console.log(tasks)
+        await fetch(BASE_API_URL + "/createTask",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -93,22 +97,21 @@ navigate(0)
             body: JSON.stringify({
                 nombre: task.nombre,
                 rate:task.rate,
-                grade:task.grade,
-                group:task.group,
-                area: task.area,
+                grade:student.grado,
+                group:student.grupo,
+                area: student.especialidad,
                 emailUser: localStorage.getItem("email"),
                 password: localStorage.getItem("password"),
                 alumnosTask: students,
-                groupId: idgroup
+                groupId: student.groupid
             })
         }).then(data=>data.json()).then(data=>console.log(data))
         }
         
         }
-
     function getStudentInfo (){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudent/${id}`,{
+        fetch(`${BASE_API_URL}/getStudent/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -120,7 +123,7 @@ navigate(0)
 
     function getTasks(){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getTasks/${Number(id)}`,{
+        fetch(`${BASE_API_URL}/getTasks/${Number(id)}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -129,10 +132,19 @@ navigate(0)
             if(data.length > 0){2
                 console.log(tasks)
                 setTasks(data)
+                
             }
         }
         )
     }
+
+    useEffect(()=>{
+        tasks.map((e)=>{
+            console.log(Number(e.final_rate)+tasksTotal)
+            setTasksTotal(prevTasksTotal => Number(e.final_rate) + prevTasksTotal);
+        })
+        console.log(tasks)
+    },[tasks])
 
     function showCreateTask(){
         form.style.display ="flex"
@@ -142,8 +154,8 @@ navigate(0)
                }
 
            function addTask(task){
-          
             addTaskDB(task)
+
         console.log(task)
            }
 
@@ -158,7 +170,7 @@ navigate(0)
 
            function getStudents() {
             const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-            fetch(`https://tasksflow-backend.onrender.com/getStudents/${idgroup}`,{
+            fetch(`${BASE_API_URL}/getStudents/${idgroup}`,{
                 headers:{
                     'Authorization': `Basic ${credentials}`,
                     "Content-Type":"application/json"
@@ -178,7 +190,7 @@ navigate(0)
             console.log("haaa")
             if(confirm === true){
                 console.log("iiiaaa")
-               await fetch(`https://tasksflow-backend.onrender.com/deleteStudent/${Number(id)}`,{
+               await fetch(`${BASE_API_URL}/deleteStudent/${Number(id)}`,{
                     method: "DELETE",
                     headers:{
                         "Content-Type":"application/json"
@@ -245,6 +257,8 @@ getTasks()
 </div>
 <div className={StudentStyles.tasksContainer}>
 <button className={StudentStyles.taskButtonAdd} onClick={showCreateTask}>Crear Tarea</button>
+<button className={StudentStyles.tasksTotal}>{`Calificacion Total:${tasksTotal}`}</button>
+
 <Form target="tasks" students={students} input1Type="text" input1="Nombre" input2="Valor" input3="Calificación Final" addTask ={addTask}  addForm ={addForm}/>
 
 

@@ -4,6 +4,7 @@ import Styles from "./styles/Scanner.module.css";
 import { Html5Qrcode } from 'html5-qrcode';
 import correctSVG from "./assets/check-circle-svgrepo-com.svg"
 import notCorrectSVG from "./assets/no-alt-svgrepo-com.svg"
+import { BASE_API_URL } from './api';
 
 const Scanner = () => {
     const [response,setResponse] = useState()
@@ -57,7 +58,7 @@ const Scanner = () => {
             try {
                 const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
 
-                await fetch(`https://tasksflow-backend.onrender.com/attendance`, {
+                await fetch(`${BASE_API_URL}/attendance`, {
                     method: "POST",
                     headers: {
                         'Authorization': `Basic ${credentials}`,
@@ -83,7 +84,7 @@ const Scanner = () => {
                 })
 
 
-                await fetch(`https://tasksflow-backend.onrender.com/getStudent/${Number(params.id)}`, {
+                await fetch(`${BASE_API_URL}/getStudent/${Number(params.id)}`, {
                     headers: {
                         'Authorization': `Basic ${credentials}`,
                         "Content-Type": "application/json"

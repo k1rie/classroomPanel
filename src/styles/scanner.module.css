@@ -7,6 +7,8 @@
 }
 
 .container{
+    margin-left: var(--body_navBarWidth);
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,6 +63,7 @@
 @media (max-width: 900px) {
 .container{
     width: 100%;
+    margin: 0;
 }
 
 .reader{

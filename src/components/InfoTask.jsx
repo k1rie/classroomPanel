@@ -11,7 +11,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
 
   // Funciones para editar y eliminar
   const changeNameTask = async (id, oldName) => {
-    await fetch("https://tasksflow-backend.onrender.com/changeNameTask", {
+    await fetch(BASE_API_URL + "/changeNameTask", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -29,7 +29,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
   };
 
   const changeRateTaskGroup = async (id, oldRate) => {
-    await fetch("https://tasksflow-backend.onrender.com/changeRateTaskGroup", {
+    await fetch(BASE_API_URL + "/changeRateTaskGroup", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -50,7 +50,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
   };
 
   const deleteTask = async (id, taskName) => {
-    await fetch("https://tasksflow-backend.onrender.com/deleteTask", {
+    await fetch(BASE_API_URL + "/deleteTask", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

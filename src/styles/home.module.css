@@ -36,6 +36,8 @@ h1 {
 }
 
 .homeContainer{
+
+  margin-left: var(--body_navBarWidth);
   background-color: var(--body_background);
   display: flex;
   flex-direction: column;
@@ -55,6 +57,19 @@ h1 {
   align-items: center;
   width: 80%;
   height: 40vh;
+}
+
+.titleContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.logo{
+  height: 250px;
+  width: 250px;
 }
 
 .groupsCardsContainer{
@@ -161,8 +176,8 @@ h1 {
 
 @media (max-width:1470px) {
  .groupsContainer{
-  width: 80vw;
- }
+  width: 100%;
+}
 }
 
 
@@ -173,11 +188,15 @@ h1 {
   }
  }
 
- @media (max-width: 768px) {
+ @media (max-width: 900px) {
   .homeContainer{
     width: 100%;
+    margin: 0;
   }
+}
+
+ @media (max-width: 768px) {
   .groupsContainer{
-    width: 90%;
+    width: 100%;
   }
 }

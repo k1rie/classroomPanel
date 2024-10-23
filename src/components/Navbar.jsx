@@ -4,6 +4,7 @@ import NavBarStyles from '../styles/navbar.module.css';
 import HomeSvg from '../assets/home-angle-2-svgrepo-com.svg'; // Asegúrate de importar correctamente tu SVG
 import ScannerSvg from "../assets/scanner-svgrepo-com.svg"
 
+
 const Navbar = () => {
 
   const navigate = useNavigate()
@@ -112,7 +113,7 @@ toggleThemeElement.current.checked = "true"
           
           <p className={NavBarStyles.menuTittle}>MENU</p>
           <Link
-            to="/"
+            to="/dashboard"
             className={NavBarStyles.optionContainer}
             onClick={(e) => {
               focusOption(e);
@@ -149,7 +150,6 @@ toggleThemeElement.current.checked = "true"
 </div>
           <Link to="/"><button onClick={logOut} className={NavBarStyles.logOut}>Cerrar Sesion</button></Link>
           {/* Añade más opciones de menú aquí */}
-          
         </div>
         
       </div>

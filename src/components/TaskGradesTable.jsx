@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/TaskGradesTable.module.css'; // Importar CSS Modules
 import { useNavigate } from 'react-router-dom';
+import { BASE_API_URL } from '../api';
 
 const TaskGradesTable = ({ tasksData = [], studentId }) => {
   const [tasks, setTasks] = useState(tasksData); // Asegurarse de que tasksData tiene un array
@@ -21,7 +22,7 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
 
   // Función para enviar el porcentaje al servidor
   const changeFinalRate = async (task) => {
-    await fetch(`https://tasksflow-backend.onrender.com/changeRateTask`, {
+    await fetch(`${BASE_API_URL}/changeRateTask`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -68,6 +69,8 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
                       }
                     }}
                   />
+
+                  
                 </td>
                 <td>{task.final_rate !== null ? task.final_rate : 'No asignado'}</td> {/* Mostrar final_rate o un mensaje si es null */}
               </tr>

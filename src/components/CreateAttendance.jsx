@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import styles from "../styles/createattendance.module.css"
 import exitSVG from "../assets/exit-svgrepo-com.svg"
+import { BASE_API_URL } from "../api";
 
 const CreateAttendance = (props)=>{
     const {id,grade,group,area} = useParams()
@@ -15,7 +16,7 @@ const CreateAttendance = (props)=>{
         // Aquí puedes manejar la lógica del formulario, como enviar los datos a un servidor.
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
     
-    await fetch("https://tasksflow-backend.onrender.com/createAttendance",{
+    await fetch(BASE_API_URL + "/createAttendance",{
         method: "POST",
         headers:{
             'Authorization': `Basic ${credentials}`,
@@ -52,10 +53,10 @@ const CreateAttendance = (props)=>{
     return(
 <div>
 <div ref={container} className={styles.container}>
- <img className={styles.exitSVG} src={exitSVG} onClick={()=>{
+ <button className={styles.exitSVG} src={exitSVG} onClick={()=>{
         container.current.style.display = "none"
         props.setShowCreateAttendance(false)
-    }}/>
+    }}>X</button>
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit}>
      

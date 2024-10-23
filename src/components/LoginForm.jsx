@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import styles from '../styles/loginform.module.css';
 import succesfullSvg from "../assets/check-circle-svgrepo-com.svg"
 import { useNavigate } from 'react-router-dom';
+import { BASE_API_URL } from '../api';
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,7 +22,7 @@ const AuthForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if(isLogin === false){
-        await fetch("https://tasksflow-backend.onrender.com/createUser",{
+        await fetch(BASE_API_URL + "/createUser",{
             method: "POST",
             headers:{
                 "Content-Type": "application/json"
@@ -45,7 +46,7 @@ const AuthForm = () => {
         })
     }else{
       const credentials = btoa(`${email}:${password}`);
-        await fetch("https://tasksflow-backend.onrender.com/verifyUser",{
+        await fetch(BASE_API_URL + "/verifyUser",{
             method: "GET",
             headers:{
                 'Authorization': `Basic ${credentials}`,

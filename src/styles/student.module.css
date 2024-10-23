@@ -1,10 +1,7 @@
-.container{
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
+
 
 .studentCardsContainer{
+
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -53,6 +50,19 @@
     
   }
 
+  .tasksTotal{
+    margin-left: 10px;
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: 2px solid #007a87;
+    color: #007a87;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
   .attendanceStudent {
     color:  var(--body_textColor); 
     border-color:  black;
@@ -97,13 +107,15 @@
   
 
 .studentContainer{
+  margin-left: var(--body_navBarWidth);
+
   gap: 20px;
     display: grid;
     justify-items: center;
     align-items: center;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    width: 90vw;
+    width: 90%;
     height: 100vh;
     background-color: var(--body_background);
 }
@@ -240,9 +252,20 @@ width: 90%;
 height: 20%;
     }
   }
+
+  @media (max-width: 900px) {
+    .tasksContainer{
+      height: 500px;
+    }
+    .studentContainer{
+      width: 100%;
+      margin: 0px;
+
+    }
+  }
   /* Responsive design */
   @media (max-width: 768px) {
- 
+
   
     .task {
   

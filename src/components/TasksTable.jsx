@@ -3,6 +3,7 @@ import editSvg from "../assets/pen-svgrepo-com (1).svg"; // Icono de editar
 import trashSvg from "../assets/trash-bin-trash-svgrepo-com.svg"; // Icono de eliminar
 import styles from '../styles/TasksTable.module.css'; // Importa los estilos como CSS Modules
 import { useNavigate } from 'react-router-dom';
+import { BASE_API_URL } from '../api';
 
 const TasksTable = ({ data, grade, group, area, students }) => {
   const [newNameTask, setNewNameTask] = useState('');
@@ -13,7 +14,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
 
   // Función para cambiar el nombre de la tarea
   const changeNameTask = async (id, oldName) => {
-    await fetch("https://tasksflow-backend.onrender.com/changeNameTask", {
+    await fetch(BASE_API_URL + "/changeNameTask", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -33,7 +34,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
 
   // Función para cambiar el rate de la tarea
   const changeRateTaskGroup = async (id, oldRate) => {
-    await fetch("https://tasksflow-backend.onrender.com/changeRateTaskGroup", {
+    await fetch(BASE_API_URL + "/changeRateTaskGroup", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json"
@@ -56,7 +57,7 @@ const TasksTable = ({ data, grade, group, area, students }) => {
 
   // Función para eliminar una tarea
   const deleteTask = async (id, taskName) => {
-    await fetch("https://tasksflow-backend.onrender.com/deleteTask", {
+    await fetch(BASE_API_URL + "/deleteTask", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json"

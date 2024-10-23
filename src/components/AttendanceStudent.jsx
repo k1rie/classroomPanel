@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import checkSVG from "../assets/check-svgrepo-com.svg"
 import notCheckSVG from "../assets/no-alt-svgrepo-com.svg"
 import exitSVG from "../assets/exit-svgrepo-com.svg"
+import { BASE_API_URL } from "../api"
 
 const AttendanceStudent = (props)=>{
 
@@ -17,7 +18,7 @@ const AttendanceStudent = (props)=>{
    
         console.log(props)
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudentAttendance/${id}`,{
+        fetch(`${BASE_API_URL}/getStudentAttendance/${id}`,{
        headers:{
           'Authorization': `Basic ${credentials}`,
                     "Content-Type":"application/json"
@@ -34,7 +35,7 @@ const getPermissions= ()=>{
    
     console.log(props)
     const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-    fetch(`https://tasksflow-backend.onrender.com/getPermissions/${id}`,{
+    fetch(`${BASE_API_URL}/getPermissions/${id}`,{
    headers:{
       'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"
@@ -69,10 +70,10 @@ useEffect(()=>{
 },[props.name,props.lastName])
     return(
 <div className={AttendanceStudentStyles.container} ref={container}>
-    <img className={AttendanceStudentStyles.exitSVG} src={exitSVG} onClick={()=>{
+    <button className={AttendanceStudentStyles.exitSVG} src={exitSVG} onClick={()=>{
         container.current.style.display = "none"
         props.showAttendancesSet(false)
-    }}/>
+    }}>X</button>
 <div className={AttendanceStudentStyles.attendanceContainer}>
 
 

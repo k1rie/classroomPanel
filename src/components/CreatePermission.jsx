@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from '../styles/createpermission.module.css';
 import { useParams } from 'react-router-dom';
 import exitSVG from "../assets/exit-svgrepo-com.svg"
+import { BASE_API_URL } from '../api';
 
 const CreatePermission = (props) => {
     const {id,grade,group,area} = useParams()
@@ -16,7 +17,7 @@ const CreatePermission = (props) => {
     // Aquí puedes manejar la lógica del formulario, como enviar los datos a un servidor.
     const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
 
-await fetch("https://tasksflow-backend.onrender.com/createPermission",{
+await fetch(BASE_API_URL + "/createPermission",{
     method: "POST",
     headers:{
         'Authorization': `Basic ${credentials}`,
@@ -56,10 +57,10 @@ useEffect(()=>{
 
   return (
     <div ref={container} className={styles.container}>
- <img className={styles.exitSVG} src={exitSVG} onClick={()=>{
+ <button className={styles.exitSVG}  onClick={()=>{
         container.current.style.display = "none"
         props.setShowCreatePermissions(false)
-    }}/>
+    }}>X</button>
     <div className={styles.formContainer}>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>

@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import ExportDataGroupStyles from "../styles/exportdatagroup.module.css"
+import { BASE_API_URL } from "../api";
 
 const ExportDataGroup = (props)=>{
 
@@ -7,7 +8,7 @@ const ExportDataGroup = (props)=>{
 
     function exportData(){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getDataList/${id}/${props.grado}/${props.grupo}/${props.especialidad}`,{
+        fetch(`${BASE_API_URL}/getDataList/${id}/${props.grado}/${props.grupo}/${props.especialidad}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"

@@ -1,8 +1,9 @@
 /* Contenedor de la sidebar */
 .container {
+  position: fixed;
     top: 0;
     left: 0;
-    width: 250px; /* Ancho fijo para la sidebar */
+    width: var(--body_navBarWidth); /* Ancho fijo para la sidebar */
     height: 100vh;
     background-color: var(--body_navBackground);
     border-right: 1px solid #e4e4e5;
@@ -188,7 +189,6 @@ input:checked + .slider:before {
     /* Ocultar la sidebar por defecto en móviles */
     .container {
       transform: translateX(-100%);
-      position: fixed;
     }
   
     /* Mostrar la sidebar cuando esté abierta */

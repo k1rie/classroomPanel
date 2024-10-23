@@ -6,21 +6,23 @@ import NavBar from './components/Navbar';
 import GroupCard from './components/GroupCard';
 import Form from './components/Form.jsx';
 import LoginForm from './components/LoginForm.jsx';
+import Logo from "./assets/logo.svg"
 
 // Importa los componentes y estilos de Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { BASE_API_URL } from './api/index.js';
 
 
-function App(props) {
+function App() {
   const [groups, setGroups] = useState([]);
   const [form, setForm] = useState();
 
   async function getGroups() {
     const credentials = btoa(`${localStorage.getItem('email')}:${localStorage.getItem('password')}`);
-    await fetch('https://tasksflow-backend.onrender.com/getClassrooms', {
+    await fetch(`${BASE_API_URL}/getClassrooms`, {
       headers: {
         Authorization: `Basic ${credentials}`,
         'Content-Type': 'application/json',
@@ -28,6 +30,7 @@ function App(props) {
     })
       .then((data) => data.json())
       .then((data) => {
+        console.log(data)
         setGroups(data);
       });
   }
@@ -71,7 +74,9 @@ function App(props) {
       />
       <NavBar />
       <div className={HomeStyles.homeContainer}>
-        <h1>e-Tareas</h1>
+     <div className={HomeStyles.titleContainer}>
+     <h1>SmartClass</h1>
+      </div>
         <div className={HomeStyles.groupsContainer}>
           <p className={HomeStyles.groupsTittle}>Grupos</p>
           <div className={HomeStyles.groupsCardsContainer}>

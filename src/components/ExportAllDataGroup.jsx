@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import Styles from "../styles/ExportAllDataGroup.module.css"
+import { BASE_API_URL } from "../api";
 
 const ExportAllDataGroup = ()=>{
 
@@ -7,7 +8,7 @@ const ExportAllDataGroup = ()=>{
 
     function exportResume(){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getResume/${id}`,{
+        fetch(`https://smartclass-backend.onrender.com/getResume/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"
@@ -28,7 +29,7 @@ const ExportAllDataGroup = ()=>{
     
     function exportCalifications(){
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getCalifications/${id}`,{
+        fetch(`${BASE_API_URL}/getCalifications/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type":"application/json"

@@ -4,6 +4,7 @@ import attendanceStyles from "./styles/attendance.module.css"
 import { useEffect, useRef, useState } from "react"
 import correctSVG from "./assets/check-circle-svgrepo-com.svg"
 import notCorrectSVG from "./assets/no-alt-svgrepo-com.svg"
+import { BASE_API_URL } from "./api"
 
 const Attendance = ()=>{
 
@@ -16,7 +17,7 @@ const Attendance = ()=>{
 
     const getStudent = ()=>{
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudent/${id}`,{
+        fetch(`${BASE_API_URL}/getStudent/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -29,7 +30,7 @@ const Attendance = ()=>{
     const attendance = ()=>{
         console.log(lastName)
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/attendance`,{
+        fetch(`${BASE_API_URL}/attendance`,{
             method: "POST",
             headers: {
                 'Authorization': `Basic ${credentials}`,

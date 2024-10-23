@@ -1,16 +1,16 @@
 import GroupCard from "./components/GroupCard"
 import NavBar from "./components/Navbar"
 import GroupStyles from "./styles/group.module.css"
-import InfoStudent from "./components/InfoStudent"
 import Form from "./components/Form.jsx"
 import { useState,useEffect } from "react"
 import {useParams, useNavigate } from "react-router-dom"
 import ConfirmDelete from "./components/ConfirmDelete.jsx"
-import InfoTask from "./components/InfoTask.jsx"
 import ExportDataGroup from "./components/ExportDataGroup.jsx"
 import StudentsTable from "./components/StudentsTable.jsx"
 import TasksTable from "./components/TasksTable.jsx"
 import ExportAllDataGroup from "./components/ExportAllDataGroup.jsx"
+import { BASE_API_URL } from "./api/index.js"
+import GetAttendances from "./components/getAttendances.jsx"
 
 const Group = ()=>{
 
@@ -33,6 +33,7 @@ const Group = ()=>{
     const [form3,setForm3] = useState([])
     const [groupData,setGroupData] = useState({})
     const [groupInfo,setGroupInfo] = useState({})
+    const[showAttendances,setShowAttendances] = useState()
     
 
     
@@ -45,7 +46,7 @@ const Group = ()=>{
          setTasks([...tasks,task])
          console.log("aaatasks")
          console.log(tasks)
-        await fetch("https://tasksflow-backend.onrender.com/createTask",{
+        await fetch(BASE_API_URL + "/createTask",{
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -58,6 +59,7 @@ const Group = ()=>{
                 area: groupInfo.especialidad,
                 emailUser: localStorage.getItem("email"),
                 password: localStorage.getItem("password"),
+                finalRate: task.final_rate,
                 alumnosTask: students,
                 groupId: id
             })
@@ -83,7 +85,7 @@ const Group = ()=>{
 
            function getTasksGroup(){
             const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-            fetch(`https://tasksflow-backend.onrender.com/getTasksGroup/${id}`,{
+            fetch(`${BASE_API_URL}/getTasksGroup/${id}`,{
                 headers:{
                     'Authorization': `Basic ${credentials}`,
                     "Content-Type": "application/json"
@@ -128,7 +130,7 @@ const Group = ()=>{
        if(student.length !== 0){
         console.log("studentaaa")
         console.log(student)
-        const data = await fetch("https://tasksflow-backend.onrender.com/createStudent",{
+        const data = await fetch(BASE_API_URL + "/createStudent",{
             method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -177,7 +179,7 @@ const Group = ()=>{
 
     function getStudents() {
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getStudents/${id}`,{
+        fetch(`${BASE_API_URL}/getStudents/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -193,7 +195,7 @@ const Group = ()=>{
 
     async function confirmDeleteState(confirm){
         if(confirm === true){
-           await fetch(`https://tasksflow-backend.onrender.com/deleteClassroom/${Number(id)}`,{
+           await fetch(`${BASE_API_URL}/deleteClassroom/${Number(id)}`,{
                 method: "DELETE",
                 headers:{
                     "Content-Type": "application/json"
@@ -203,7 +205,7 @@ const Group = ()=>{
                     password: localStorage.getItem("password")
                 })
             }).then(data=>data.json()).then(data=>console.log(data))
-            navigate("/")
+            navigate("/dashboard")
 
         }
     }
@@ -238,7 +240,7 @@ const Group = ()=>{
         console.log(groupData)
         if(groupData.area && groupData.area.length > 0){
             console.log("fsafasgfas")
-       await fetch("https://tasksflow-backend.onrender.com/updateGroup",{
+       await fetch(BASE_API_URL + "/updateGroup",{
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
@@ -270,7 +272,7 @@ const Group = ()=>{
 
     useEffect(()=>{
         const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
-        fetch(`https://tasksflow-backend.onrender.com/getClassroom/${id}`,{
+        fetch(`${BASE_API_URL}/getClassroom/${id}`,{
             headers:{
                 'Authorization': `Basic ${credentials}`,
                 "Content-Type": "application/json"
@@ -281,7 +283,11 @@ console.log(data)
         })
     },[])
 return(
+    <>
+                <GetAttendances area={groupInfo.especialidad} group={groupInfo.grupo} grade={groupInfo.grado} showAttendances={showAttendances} setShowAttendances={setShowAttendances}/>
+
     <div className={GroupStyles.container}>
+
 <ConfirmDelete message="¿Estas seguro que quieres eliminar este grupo?" addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
 <Form target="updateGroup" students={students} input1Type="text" input1="Grado" input2="Grupo" input3="Especialidad" getGroup ={getGroup}  addForm ={addForm3}/>
 
@@ -295,6 +301,10 @@ return(
     <button className={GroupStyles.editGroup} onClick={showCreateGroup}>Editar Grupo</button>
     <ExportDataGroup grado={groupInfo.grado} grupo={groupInfo.grupo} especialidad={groupInfo.especialidad}/>
     <ExportAllDataGroup/>
+    <button className={GroupStyles.attendanceStudents} 
+                                    onClick={()=>{
+                                        setShowAttendances(true)
+                                    }}>Consultar Asistencias</button>
 </div>
     <div className={GroupStyles.groupInfo}>
 <GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
@@ -311,7 +321,7 @@ return(
 
 </div>
 
-<TasksTable data={tasks}/>
+<TasksTable data={tasks} students={students}/>
 
 
 
@@ -326,6 +336,7 @@ return(
 </div>
 </div>
     </div>
+    </>
 )
 }
 
