@@ -16,10 +16,14 @@
 
 /* Form styling */
 .form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   background-color: var(--body_background);
   padding: 40px;
   border-radius: 8px;
   width: 90%;
+  height: 20%;
   max-width: 500px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   position: relative;

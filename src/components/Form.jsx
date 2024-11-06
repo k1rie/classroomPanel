@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom"
 import FormStyles from "../styles/form.module.css"
 import { useRef,useEffect, useState } from "react"
 import { BASE_API_URL } from "../api"
+import { Button, createTheme, TextField, ThemeProvider } from "@mui/material"
 
 const Form = (props)=>{
 
@@ -110,19 +111,8 @@ useEffect(()=>{
     
 },[])
 
-useEffect(()=>{
- 
-  if(props.studentData){
-    console.log(props.studentData)
-    refInput1.current.value = props.studentData.nombre
-    setInput1(refInput1.current.value)
-    refInput2.current.value = props.studentData.apellidos
-    setInput2(refInput2.current.value)
-    refInput3.current.value = props.studentData.correo
-    setInput3(refInput3.current.value)
-  }
 
-},[props.studentData])
+
 
     return(
         <>
@@ -138,49 +128,113 @@ useEffect(()=>{
     </button>
     <div className={FormStyles.flex}>
       <label>
-        <input
-        ref={refInput1}
-          required
-          placeholder=" "
-          type={props.input1Type}
-          className={FormStyles.input}
-          onChange={(e) => {
-            setInput1(e.currentTarget.value);
-          }}
+        <TextField
+          id="outlined-required"
+          label={props.input1}
+        inputRef={refInput1}
+          color="primary.main"
+          variant="outlined"
+          sx={{
+            '& .MuiInputBase-input': {
+                color: 'primary.main', // Cambia el color del texto
+            },
+            '& .MuiInputLabel-root': {
+                color: 'primary.main', // Cambia el color del label
+            },
+            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main', // Cambia el color del borde cuando está enfocado
+            },
+            '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: 'primary.main', // Color del borde normal
+                    },
+                    '&:hover fieldset': {
+                        borderColor: 'primary.main', // Color del borde al pasar el mouse
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: 'primary.main', // Color del borde al estar enfocado
+                    },
+                },
+        }}
+        onChange={(e) => {
+          setInput1(e.currentTarget.value);
+        }}
         />
-        <span>{props.input1}</span>
       </label>
       <label>
-        <input
-        ref={refInput2}
-        
-          required
-          placeholder=" "
-          type="text"
-          className={FormStyles.input}
+        <TextField
+                id="outlined-required"
+                label={props.input2}
+                inputRef={refInput1}
+                color="white"
+                variant="outlined"
+                sx={{
+                  '& .MuiInputBase-input': {
+                      color: 'primary.main', // Cambia el color del texto
+                  },
+                  '& .MuiInputLabel-root': {
+                      color: 'primary.main', // Cambia el color del label
+                  },
+                  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                      borderColor: 'primary.main', // Cambia el color del borde cuando está enfocado
+                  },
+                  '& .MuiOutlinedInput-root': {
+                          '& fieldset': {
+                              borderColor: 'primary.main', // Color del borde normal
+                          },
+                          '&:hover fieldset': {
+                              borderColor: 'primary.main', // Color del borde al pasar el mouse
+                          },
+                          '&.Mui-focused fieldset': {
+                              borderColor: 'primary.main', // Color del borde al estar enfocado
+                          },
+                      },
+              }}
           onChange={(e) => {
             setInput2(e.currentTarget.value);
           }}
         />
-        <span>{props.input2}</span>
       </label>
     </div>
     <label>
-      <input
-      ref={refInput3}
-     
-        required
-        placeholder=" "
-        type="text"
-        className={FormStyles.input}
+      <TextField
+              id="outlined-required"
+              label={props.input3}
+              inputRef={refInput1}
+              color="white"
+              variant="outlined"
+              sx={{
+                '& .MuiInputBase-input': {
+                    color: 'primary.main', // Cambia el color del texto
+                },
+                '& .MuiInputLabel-root': {
+                    color: 'primary.main', // Cambia el color del label
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                    borderColor: 'primary.main', // Cambia el color del borde cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                            borderColor: 'primary.main', // Color del borde normal
+                        },
+                        '&:hover fieldset': {
+                            borderColor: 'primary.main', // Color del borde al pasar el mouse
+                        },
+                        '&.Mui-focused fieldset': {
+                            borderColor: 'primary.main', // Color del borde al estar enfocado
+                        },
+                    },
+            }}
+            size="large"
+            fullWidth
         onChange={(e) => {
           setInput3(e.currentTarget.value);
         }}
       />
-      <span>{props.input3}</span>
     </label>
-    <button
-      className={FormStyles.fancy}
+    <Button
+    variant="outlined"
+    fullWidth
       onClick={() => {
         createGroup();
         getInfo();
@@ -188,7 +242,7 @@ useEffect(()=>{
       }}
     >
       Añadir
-    </button>
+    </Button>
   </div>
 </div>
         </>

@@ -78,6 +78,13 @@
     font-size: 1.1rem;
     margin-left: 20px;
   }
+
+  .optionTittleAdvise{
+    font-family: "Fredoka", sans-serif;
+    color: var(--body_textColor);
+    font-size: 0.9rem;
+    margin-left: 20px;
+  }
   
   /* Botón de menú para móvil */
   .menuButton {

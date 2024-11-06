@@ -11,6 +11,12 @@ import TasksTable from "./components/TasksTable.jsx"
 import ExportAllDataGroup from "./components/ExportAllDataGroup.jsx"
 import { BASE_API_URL } from "./api/index.js"
 import GetAttendances from "./components/getAttendances.jsx"
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import IconButton from '@mui/material/IconButton';
+import { ButtonGroup } from "@mui/material"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Link } from '@mui/material';
 
 const Group = ()=>{
 
@@ -34,7 +40,7 @@ const Group = ()=>{
     const [groupData,setGroupData] = useState({})
     const [groupInfo,setGroupInfo] = useState({})
     const[showAttendances,setShowAttendances] = useState()
-  
+  const[list,setList] = useState(0)
     
 
     
@@ -306,15 +312,22 @@ return(
 <div className={GroupStyles.groupContainer}>
 <div className={GroupStyles.topContainer}>
 <div className={GroupStyles.optionsStudentContainer}>
-
-    <button className={GroupStyles.deleteGroup} onClick={confirmDeleteShow}>Eliminar Grupo</button>
-    <button className={GroupStyles.editGroup} onClick={showCreateGroup}>Editar Grupo</button>
+<IconButton aria-label="delete"  color="primary" variant="outlined" startIcon={<DeleteIcon />} onClick={confirmDeleteShow}>        <DeleteIcon />
+</IconButton>
+<ButtonGroup sx={{
+        flexDirection: { xs:'column',sm: 'column', md:'row' }, // Cambia a columna en pantallas pequeñas
+}} size="large" variant="outlined" aria-label="Basic button group">
+    <Button variant="outlined" onClick={showCreateGroup}>Editar Grupo</Button>
     <ExportDataGroup grado={groupInfo.grado} grupo={groupInfo.grupo} especialidad={groupInfo.especialidad}/>
     <ExportAllDataGroup/>
-    <button className={GroupStyles.attendanceStudents} 
+    <Button variant="outlined" className={GroupStyles.attendanceStudents} 
                                     onClick={()=>{
                                         setShowAttendances(true)
-                                    }}>Consultar Asistencias</button>
+                                    }}>Consultar Asistencias</Button>
+</ButtonGroup>
+   
+    
+  
 </div>
     <div className={GroupStyles.groupInfo}>
 <GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
@@ -342,6 +355,43 @@ return(
 <Form key={2} target="students" input1Type="text" input1="Nombre" input2="Apellidos" input3="Email" addStudent ={addStudent}  addForm ={addForm}/>
 <StudentsTable data={students} />
 
+<TableContainer component={Paper}>
+<Table aria-label="simple table">
+<TableHead>
+          <TableRow>
+            <TableCell>Lista</TableCell>
+            <TableCell align="right">Apellidos</TableCell>
+            <TableCell align="right">Nombre(s)</TableCell>
+            <TableCell align="right">Correo</TableCell>
+          </TableRow>
+        </TableHead>
+
+        <TableBody>
+          {students.map((row,index) => (
+      
+            <TableRow
+              key={row.name}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+                <Link
+                href={`/student/group/${id}/${row.id}`}
+                underline="hover"
+                color="inherit"
+                sx={{ display: 'block' }} // Asegura que cubra la celda
+                >
+              <TableCell component="th" scope="row">
+                {index+1}
+              </TableCell>
+              </Link>
+              <TableCell align="right">{row.apellidos}</TableCell>
+              <TableCell align="right">{row.nombre}</TableCell>
+              <TableCell align="right">{row.correo}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+
+</Table>
+</TableContainer>
 
 </div>
 </div>

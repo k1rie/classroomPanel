@@ -151,8 +151,10 @@ toggleThemeElement.current.checked = "true"
           <Link to="/"><button onClick={logOut} className={NavBarStyles.logOut}>Cerrar Sesion</button></Link>
           {/* Añade más opciones de menú aquí */}
         </div>
-        
+        <p className={NavBarStyles.optionTittleAdvise}>Aviso: Algunas funciones pueden tardar más de lo normal, en caso de que la demora sea mucha o para cualquier duda, sugerencia o reporte, porfavor enviar un correo a k1rie@hotmail.com</p>
+
       </div>
+      
     </>
   );
 };

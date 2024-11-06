@@ -10,6 +10,8 @@ import CreatePermission from "./components/CreatePermission.jsx"
 import CreateAttendance from "./components/CreateAttendance.jsx"
 import TaskGradesTable from "./components/TaskGradesTable.jsx"
 import { BASE_API_URL } from "./api/index.js"
+import { Button, ButtonGroup, IconButton } from "@mui/material"
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Student = ()=>{
 
@@ -37,7 +39,19 @@ const Student = ()=>{
 
     const [showCreateAttendance,setShowCreateAttendance] = useState()
 
-
+    function sendQR(){
+        const credentials = btoa(`${localStorage.getItem("email")}:${localStorage.getItem("password")}`);
+        fetch(`${BASE_API_URL}/sendQR`,{
+            method: "POST",
+            headers:{
+                'Authorization': `Basic ${credentials}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                idStudent:id
+            })
+        }).then(data=>data.json()).then(data=>console.log(data)).catch((error)=>console.log(error))
+    }
     
     
     function addStudent(student){
@@ -231,19 +245,28 @@ getTasks()
             <NavBar/>
             <div className={StudentStyles.studentContainer}>
             <div className={StudentStyles.optionsStudentContainer}>
-
-            <button className={StudentStyles.deleteStudent} onClick={confirmDeleteShow}>Eliminar Alumno</button>
-            <button className={StudentStyles.editStudent} onClick={showCreateTask2}>Editar Alumno</button>
-                                    <button className={StudentStyles.attendanceStudent} 
+            <IconButton aria-label="delete"  color="primary" variant="outlined" startIcon={<DeleteIcon />} onClick={confirmDeleteShow}>        <DeleteIcon />
+</IconButton>
+            <ButtonGroup sx={{
+        flexDirection: { xs:'column',sm: 'column', md:'row' }, // Cambia a columna en pantallas pequeñas
+}} size="large" variant="outlined" aria-label="Basic button group">
+<Button className={StudentStyles.editStudent} onClick={showCreateTask2}>Editar Alumno</Button>
+                                    <Button className={StudentStyles.attendanceStudent} 
                                     onClick={()=>{
                                         setShowCreatePermissions(true)
-                                    }}>Generar Permiso</button>
+                                    }}>Generar Permiso</Button>
 
-<button className={StudentStyles.attendanceStudent} 
+<Button className={StudentStyles.attendanceStudent} 
                                     onClick={()=>{
                                         setShowCreateAttendance(true)
-                                    }}>Generar Asistencia</button>
+                                    }}>Generar Asistencia</Button>
 
+                                    
+<Button className={StudentStyles.attendanceStudent} 
+                                    onClick={()=>{
+                                        sendQR()
+                                    }}>Reenviar QR</Button>
+</ButtonGroup>
             </div>
             
 

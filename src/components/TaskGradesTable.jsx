@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/TaskGradesTable.module.css'; // Importar CSS Modules
+import ChangeSVG from "../assets/change.svg"
 import { useNavigate } from 'react-router-dom';
 import { BASE_API_URL } from '../api';
 
 const TaskGradesTable = ({ tasksData = [], studentId }) => {
+  const [typeOfRate,setTypeOfRate] = useState("percentage")
   const [tasks, setTasks] = useState(tasksData); // Asegurarse de que tasksData tiene un array
   const [percentage, setPercentage] = useState(0); // Maneja el porcentaje
   const [taskName, setTaskName] = useState(''); // Para manejar el nombre de la tarea
@@ -22,24 +24,38 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
 
   // Función para enviar el porcentaje al servidor
   const changeFinalRate = async (task) => {
-    await fetch(`${BASE_API_URL}/changeRateTask`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        newRate: (Number(percentage)*task.rate)/100, // Pasar solo el porcentaje
-        idStudent: Number(studentId),
-        taskName: taskName,
-        emailUser: localStorage.getItem("email"),
-        password: localStorage.getItem("password")
-      })
-    });
+if(typeOfRate === "percentage"){    await fetch(`${BASE_API_URL}/changeRateTask`, {
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    newRate: (Number(percentage)*task.rate)/100, // Pasar solo el porcentaje
+    idStudent: Number(studentId),
+    taskName: taskName,
+    emailUser: localStorage.getItem("email"),
+    password: localStorage.getItem("password")
+  })
+});
+}else{
+  await fetch(`${BASE_API_URL}/changeRateTask`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      newRate: percentage, // Pasar solo el porcentaje
+      idStudent: Number(studentId),
+      taskName: taskName,
+      emailUser: localStorage.getItem("email"),
+      password: localStorage.getItem("password")
+    })
+  });
 
+}
     console.log(`Porcentaje para ${taskName}: ${percentage}`);
     navigate(0); // Recargar la página después de actualizar
   };
-
   return (
     <div className={styles['table-container']}>
       <table className={styles.table}>
@@ -47,7 +63,7 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
           <tr>
             <th className={styles.th}>Tarea</th>
             <th className={styles.th}>Valor</th>
-            <th className={styles.th}>Porcentaje</th>
+            <th className={styles.th}>Asignar Calificación</th>
             <th className={styles.th}>Calificación Final</th>
           </tr>
         </thead>
@@ -57,11 +73,11 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
               <tr key={task.id} className={styles.tr}>
                 <td>{task.name}</td>
                 <td>{task.rate}</td>
-                <td>
+                <td className={styles.changeFinalRateContainer}>
                   <input
                     type="number"
                     className={styles.input}
-                    placeholder="Porcentaje"
+                    placeholder={typeOfRate === "percentage" ? "Porcentaje":"Puntaje"}
                     onChange={(e) => handlePercentageChange(e, task)}
                     onKeyUp={(e) => {
                       if (e.key === "Enter") {
@@ -70,7 +86,13 @@ const TaskGradesTable = ({ tasksData = [], studentId }) => {
                     }}
                   />
 
-
+<img className={styles.changeIcon} src={ChangeSVG} onClick={()=>{
+  if(typeOfRate === "percentage"){
+    setTypeOfRate("points")
+  }else{
+    setTypeOfRate("percentage")
+  }
+}}/>
 
                 </td>
                 <td>{task.final_rate !== null ? task.final_rate : 'No asignado'}</td> {/* Mostrar final_rate o un mensaje si es null */}

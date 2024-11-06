@@ -59,6 +59,12 @@
     height: 20px;
 }
 
+.changeFinalRateContainer{
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
 .input {
     padding: 5px;
     margin-right: 10px;
@@ -67,6 +73,13 @@
     border: 1px solid #007a87;
     border-radius: 4px;
     text-align: center;
+}
+
+.changeIcon{
+    filter: invert(var(--body_svgColor));
+
+    width: 25px;
+    height: 25px;
 }
 
 .action-buttons {

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BASE_API_URL } from '../api';
 
 const AuthForm = () => {
+  const [incorrectTextValue,setIncorrectTextValue] = useState("El correo o contraseña es incorrecto, intenta en breve")
   const [isLogin, setIsLogin] = useState(true);
   const [login,setLogin] = useState(true)
   const [email,setEmail] = useState()
@@ -14,6 +15,7 @@ const AuthForm = () => {
   const succesfull = useRef()
   const form = useRef()
   const incorrectText = useRef()
+  
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -42,6 +44,9 @@ const AuthForm = () => {
               navigate(0)
             },2000)
 
+          }else{
+            incorrectText.current.style.display = "block"
+            setIncorrectTextValue("Parece que el correo ya esta asociado a una cuenta o el servidor esta tardando más de lo normal")
           }
         })
     }else{
@@ -93,7 +98,7 @@ const AuthForm = () => {
         <button type="submit" className={styles.button}>
           {isLogin ? 'Ingresar' : 'Registrarse'}
         </button>
-        <p ref={incorrectText} className={styles.incorrectText}>El correo o contraseña es incorrecto</p>
+        <p ref={incorrectText} className={styles.incorrectText}>{incorrectTextValue}</p>
       </form>
       <p className={styles.toggle}>
         {isLogin ? '¿No tienes una cuenta?' : '¿Ya tienes una cuenta?'}{' '}

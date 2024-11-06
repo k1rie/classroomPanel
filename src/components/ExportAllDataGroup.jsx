@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom"
 import Styles from "../styles/ExportAllDataGroup.module.css"
 import { BASE_API_URL } from "../api";
+import { Button } from "@mui/material";
 
 const ExportAllDataGroup = ()=>{
 
@@ -48,12 +49,12 @@ const ExportAllDataGroup = ()=>{
     }
 
     return(
-<button className={Styles.buttonExport} onClick={()=>{
+<Button variant="outlined" onClick={()=>{
     exportResume()
     exportCalifications()
 }}>
 Obtener Resumen
-</button>
+</Button>
     )
 }
 
