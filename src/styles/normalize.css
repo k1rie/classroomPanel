@@ -2,10 +2,12 @@
 
 
 :root{
+  --body_rowHover: #edf2f4;
   --body_navBarWidth: 250px;
   --body_borderColor: 1px solid white;
   --body_cardBorder: 1px solid #e7e8ec;
   --body_background: #f3f4f8 ;
+  --body_headerTableBackground: #f3f4f8 ;
   --body_navBackground: white;
   --body_textColor: black;
   --body_buttonBackground: none;
@@ -16,11 +18,13 @@
 }
 
 [data-theme="dark"]{
+  --body_rowHover: #444;
   --body_borderColor: 1px solid #323234;
   --body_cardBorder: none;
   --body_exitSVGColor: 100%;
   --body_svgColor: 100%;
   --body_background: #1a191e;
+  --body_headerTableBackground: #007a87 ;
   --body_buttonBackground: #007a87;
   --body_navBackground: #323234 ;
   --body-cardBackground: #2b2a33;

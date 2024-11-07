@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import editSvg from "../assets/pen-svgrepo-com (1).svg"; // Icono de editar
-import trashSvg from "../assets/trash-bin-trash-svgrepo-com.svg"; // Icono de eliminar
-import styles from '../styles/TasksTable.module.css'; // Importa los estilos como CSS Modules
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, IconButton, Paper, TablePagination } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
 import { BASE_API_URL } from '../api';
 
-const TasksTable = ({ data,students }) => {
-  const [taskRate,setTaskRate] = useState()
+const TasksTable = ({ data, students }) => {
+  const [taskRate, setTaskRate] = useState();
   const [taskName, setTaskName] = useState('');
   const [newNameTask, setNewNameTask] = useState('');
   const [newRateTask, setNewRateTask] = useState('');
-  const [editingTaskId, setEditingTaskId] = useState(null); // Controla la edición de tareas
-  const [editingRateId, setEditingRateId] = useState(null); // Controla la edición del rate
-  const navigate = useNavigate()
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editingRateId, setEditingRateId] = useState(null);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const navigate = useNavigate();
 
-  // Función para cambiar el nombre de la tarea
   const changeNameTask = async (id, oldName) => {
     await fetch(BASE_API_URL + "/changeNameTask", {
       method: "PATCH",
@@ -30,11 +31,9 @@ const TasksTable = ({ data,students }) => {
         password: localStorage.getItem("password")
       })
     });
-
-    setEditingTaskId(null); // Ocultar el input después de guardar, pero sin actualizar el estado visual
+    setEditingTaskId(null);
   };
 
-  // Función para cambiar el rate de la tarea
   const changeRateTaskGroup = async (id) => {
     await fetch(BASE_API_URL + "/changeRateTaskGroup", {
       method: "PATCH",
@@ -51,19 +50,9 @@ const TasksTable = ({ data,students }) => {
         password: localStorage.getItem("password")
       })
     });
-console.log({
-  alumnosTask: students,
-  newRate: newRateTask,
-  nameTask: taskName,
-  rate: taskRate,
-  idTask: id,
-  emailUser: localStorage.getItem("email"),
-  password: localStorage.getItem("password")
-})
-    setEditingRateId(null); // Ocultar el input después de guardar, pero sin actualizar el estado visual
+    setEditingRateId(null);
   };
 
-  // Función para eliminar una tarea
   const deleteTask = async (id, taskName) => {
     await fetch(BASE_API_URL + "/deleteTask", {
       method: "DELETE",
@@ -78,119 +67,150 @@ console.log({
         password: localStorage.getItem("password")
       })
     });
-    navigate(0)
-    // No actualiza el estado visual, por lo que la tarea aún aparecerá en la tabla hasta que se recargue la página.
+    navigate(0);
   };
 
-  // Función para manejar el evento "Enter" en el campo de nombre de la tarea
   const handleNameKeyDown = (e, task) => {
     if (e.key === "Enter") {
-      changeNameTask(task.id, task.name); // Llama a la función de guardar cuando se presiona Enter
-      task.name = newNameTask// Llama a la función de guardar cuando se presiona Enter
+      changeNameTask(task.id, task.name);
+      task.name = newNameTask;
     }
   };
 
-  // Función para manejar el evento "Enter" en el campo de rate de la tarea
   const handleRateKeyDown = (e, task) => {
     if (e.key === "Enter") {
-      changeRateTaskGroup(task.id, task.rate);
-      task.rate = newRateTask // Llama a la función de guardar cuando se presiona Enter
+      changeRateTaskGroup(task.id);
+      task.rate = newRateTask;
     }
   };
 
-  return (
-    <div className={styles['table-container']}>
-      <table className={styles.table}>
-        <thead>
-          <tr className={styles.tr}>
-            <th className={styles.th}>Tarea</th>
-            <th className={styles.th}>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((task) => (
-            <tr key={task.id} className={styles.tr}>
-              {/* Columna del nombre de la tarea */}
-              <td className={styles.td}>
-                {editingTaskId === task.id ? (
-                  <>
-                    <input
-                      value={newNameTask}
-                      onChange={(e) => {setNewNameTask(e.target.value)
-                        setTaskName(task.name)
-                      }}
-                      onKeyDown={(e) => handleNameKeyDown(e, task)} // Detecta "Enter"
-                      className={styles.input}
-                    />
-                    <button
-                      onClick={() => changeNameTask(task.id, task.name)}
-                      className={styles['icon-button']}
-                    >
-                      
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <span>{task.name}</span>
-                    <button
-                      onClick={() => setEditingTaskId(task.id)}
-                      className={styles['icon-button']}
-                    >
-                      <img src={editSvg} alt="Edit" />
-                    </button>
-                    <button
-                      onClick={() => deleteTask(task.id, task.name)}
-                      className={styles['icon-button']}
-                    >
-                    </button>
-                  </>
-                )}
-              </td>
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-              {/* Columna del valor (rate) */}
-              <td className={styles.td}>
-                {editingRateId === task.id ? (
-                  <>
-                    <input
-                      value={newRateTask}
-                      onChange={(e) => {setNewRateTask(e.target.value)
-                        console.log(e.target.value)
-                        setTaskName(task.name)
-                        setTaskRate(task.rate)
-                      }}
-                      onKeyDown={(e) => handleRateKeyDown(e, task)} // Detecta "Enter"
-                      className={styles.input}
-                    />
-                    <button
-                      onClick={() => changeRateTaskGroup(task.id, task.rate)}
-                      className={styles['icon-button']}
-                    >
-                      
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <span>{task.rate}</span>
-                    <button
-                      onClick={() => setEditingRateId(task.id)}
-                      className={styles['icon-button']}
-                    >
-                      <img src={editSvg} alt="Edit" />
-                    </button>
-                    <button
-                      onClick={() => deleteTask(task.id, task.name)}
-                      className={styles['icon-button']}
-                    >
-                      <img src={trashSvg} alt="Delete" />
-                    </button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const paginatedData = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
+  return (
+    <>
+      <TableContainer 
+      sx={{lg:{height:200}, height: 400, width: '100%' }}
+      component={Paper} style={{borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px",minHeight:"400px",backgroundColor:"var(--body_background)",border:"1px solid #007a87", borderBottom:"none"}}>
+        <Table stickyHeader>
+          <TableHead >
+            <TableRow>
+              <TableCell style={{color:"white",backgroundColor:"#007a87"}}>Tarea</TableCell>
+              <TableCell style={{color:"white",backgroundColor:"#007a87"}}>Valor</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedData.map((task) => (
+              <TableRow key={task.id}>
+                <TableCell>
+                  {editingTaskId === task.id ? (
+                    <>
+                      <TextField
+                        value={newNameTask}
+                        onChange={(e) => {
+                          setNewNameTask(e.target.value);
+                          setTaskName(task.name);
+                        }}
+                        onKeyDown={(e) => handleNameKeyDown(e, task)}
+                        size="small"
+                        sx={{
+                          '& .MuiInputBase-root': {
+                            color: 'var(--body_textColor)',  // Cambiar el color del texto
+                          },
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'var(--body_textColor)',  // Cambiar el color del borde
+                            },
+                        
+                         
+                          },
+                        }}          
+                      />
+                      <IconButton style={{color:"var(--body_textColor)"}} onClick={() => changeNameTask(task.id, task.name)}>
+                        <EditIcon />
+                      </IconButton>
+                    </>
+                  ) : (
+                    <>
+                      <span style={{color:"var(--body_textColor)"}}>{task.name}</span>
+                      <IconButton style={{color:"var(--body_textColor)"}} onClick={() => setEditingTaskId(task.id)}>
+                        <EditIcon />
+                      </IconButton>
+
+                    </>
+                  )}
+                </TableCell>
+                <TableCell>
+                  {editingRateId === task.id ? (
+                    <>
+                      <TextField
+
+                        value={newRateTask}
+                        onChange={(e) => {
+                          setNewRateTask(e.target.value);
+                          setTaskName(task.name);
+                          setTaskRate(task.rate);
+                        }}
+                        onKeyDown={(e) => handleRateKeyDown(e, task)}
+                        size="small"
+                        sx={{
+                          '& .MuiInputBase-root': {
+                            color: 'var(--body_textColor)',  // Cambiar el color del texto
+                          },
+                          '& .MuiOutlinedInput-root': {
+                            '& fieldset': {
+                              borderColor: 'var(--body_textColor)',  // Cambiar el color del borde
+                            },
+                        
+                         
+                          },
+                        }}          
+                      />
+                      <IconButton style={{color:"var(--body_textColor)"}} onClick={() => changeRateTaskGroup(task.id)}>
+                        <EditIcon />
+                      </IconButton>
+                    </>
+                  ) : (
+                    <div style={{width:"100%",display:"flex",alignItems:"center"}}>
+                      <span style={{color:"var(--body_textColor)"}}>{task.rate}</span>
+                      <IconButton onClick={() => setEditingRateId(task.id)}>
+                        <EditIcon style={{color:"var(--body_textColor)"}} />
+                      </IconButton>
+                      <IconButton onClick={() => deleteTask(task.id, task.name)}>
+                        <DeleteIcon style={{color:"var(--body_textColor)"}} />
+                      </IconButton>
+                    </div>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      
+      <TablePagination
+      style={{ borderBottomLeftRadius:"3px",borderBottomRightRadius:"3px", backgroundColor: 'var(--body_background)',border:"1px solid #007a87",borderTop:"none"}}
+        component="div"
+        count={data.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage="Filas por página"
+        sx={{
+          width:"100%",
+          color: 'var(--body_textColor)',
+        }}
+      />
+    </>
   );
 };
 

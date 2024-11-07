@@ -17,7 +17,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
 import { ButtonGroup } from "@mui/material"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Link } from '@mui/material';
-
+import { DataGrid } from '@mui/x-data-grid';
 const Group = ()=>{
 
     const navigate = useNavigate()
@@ -298,6 +298,68 @@ console.log(data)
 
         })
     },[])
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'apellidos', headerName: 'Apellidos', width: 130 },
+
+        { field: 'nombre', headerName: 'Nombre(s)', width: 130 },
+        {
+          field: 'correo',
+          headerName: 'Correo',
+          type: 'number',
+          width: 90,
+        },
+        
+      ];
+   
+      const localeText = {
+        // Traducciones de paginación
+        footerPaginationRowsPerPage: 'Filas por página:',
+        footerPaginationOf: 'de',
+        // Traducciones de opciones de filtro
+        filterPanelAddFilter: 'Añadir filtro',
+        filterPanelDeleteIconLabel: 'Eliminar',
+        filterPanelOperators: 'Operadores',
+        filterPanelOperatorAnd: 'Y',
+        filterPanelOperatorOr: 'O',
+        filterPanelColumns: 'Columnas',
+        filterPanelInputLabel: 'Valor',
+        filterPanelOperatorContains: 'contiene',
+        filterPanelOperatorEquals: 'igual',
+        filterPanelOperatorStartsWith: 'comienza con',
+        filterPanelOperatorEndsWith: 'termina con',
+        filterPanelOperatorIs: 'es',
+        filterPanelOperatorNot: 'no es',
+        filterPanelOperatorAfter: 'está después de',
+        filterPanelOperatorOnOrAfter: 'está en o después de',
+        filterPanelOperatorBefore: 'está antes de',
+        filterPanelOperatorOnOrBefore: 'está en o antes de',
+        filterPanelOperatorIsEmpty: 'está vacío',
+        filterPanelOperatorIsNotEmpty: 'no está vacío',
+        filterPanelOperatorIsAnyOf: 'es cualquiera de',
+        // Otras traducciones
+        toolbarColumns: 'Columnas',
+        toolbarFilters: 'Filtros',
+        toolbarDensity: 'Densidad',
+        toolbarExport: 'Exportar',
+        // Traducciones de la barra de herramientas de densidad
+        toolbarDensityLabel: 'Densidad',
+        toolbarDensityCompact: 'Compacto',
+        toolbarDensityStandard: 'Estándar',
+        toolbarDensityComfortable: 'Cómodo',
+        // Traducción de exportación
+        toolbarExportCSV: 'Descargar como CSV',
+        toolbarExportPrint: 'Imprimir',
+      };
+      
+      const paginationModel = { page: 0, pageSize: 5 };
+      const adjustedColumns = columns.map((column) => ({
+        ...column,
+        flex: 1, // Distribuye el ancho de forma equitativa
+        headerAlign: 'center', // Centra los encabezados
+        align: 'center',
+      }));
+    
 return(
     <>
                 <GetAttendances area={groupInfo.especialidad} group={groupInfo.grupo} grade={groupInfo.grado} showAttendances={showAttendances} setShowAttendances={setShowAttendances}/>
@@ -314,10 +376,23 @@ return(
 <div className={GroupStyles.optionsStudentContainer}>
 <IconButton aria-label="delete"  color="primary" variant="outlined" startIcon={<DeleteIcon />} onClick={confirmDeleteShow}>        <DeleteIcon />
 </IconButton>
-<ButtonGroup sx={{
-        flexDirection: { xs:'column',sm: 'column', md:'row' }, // Cambia a columna en pantallas pequeñas
-}} size="large" variant="outlined" aria-label="Basic button group">
-    <Button variant="outlined" onClick={showCreateGroup}>Editar Grupo</Button>
+<ButtonGroup
+size="large" 
+variant="outlined" 
+aria-label="Basic button group"
+sx={{
+    flexDirection: { xs:'column',sm: 'column', md:'row' },
+
+    border: '2px solid #1976D2', // Borde alrededor del grupo de botones
+    borderRadius: 1, // Bordes redondeados para el contenedor
+
+
+    // Estilo responsive
+    display: 'flex',
+   
+  }}
+>
+    <Button sx={{borderRight:"1px solid blue"}} variant="outlined" onClick={showCreateGroup}>Editar Grupo</Button>
     <ExportDataGroup grado={groupInfo.grado} grupo={groupInfo.grupo} especialidad={groupInfo.especialidad}/>
     <ExportAllDataGroup/>
     <Button variant="outlined" className={GroupStyles.attendanceStudents} 
@@ -353,46 +428,53 @@ return(
 <div className={GroupStyles.studentsContainer}>
 <p className={GroupStyles.addStudentButton} onClick={showCreateStudentForm}>Añadir Alumno</p>
 <Form key={2} target="students" input1Type="text" input1="Nombre" input2="Apellidos" input3="Email" addStudent ={addStudent}  addForm ={addForm}/>
-<StudentsTable data={students} />
 
-<TableContainer component={Paper}>
-<Table aria-label="simple table">
-<TableHead>
-          <TableRow>
-            <TableCell>Lista</TableCell>
-            <TableCell align="right">Apellidos</TableCell>
-            <TableCell align="right">Nombre(s)</TableCell>
-            <TableCell align="right">Correo</TableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {students.map((row,index) => (
+<Paper sx={{lg:{height:200}, height: 400, width: '100%' }}>
+      <DataGrid
+       localeText={localeText}
+        rows={students}
+        columns={adjustedColumns}
+        initialState={{ pagination: { paginationModel } }}
+        pageSizeOptions={[5, 10]}
+        onRowClick={(e)=>{navigate(`/student/group/${id}/${e.row.id}`)}}
+        sx={{
+            height: 400,
+            backgroundColor: 'var(--body_background)',
+            color: 'white',
+            borderColor: '#007a87',
+            
+            '& .MuiDataGrid-cell': {
+              color: 'var(--body_textColor)', // Color de texto de las celdas
+              borderBottom: '1px solid var(--body_borderColor)',
+            },
+            '& .MuiDataGrid-columnHeader': {
+                width:"25%",
+              backgroundColor: '#007a87',
+              color: 'white', // Color de texto de los headers
+              borderBottom: '1px solid var(--body_borderColor)',
+            },
       
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-                <Link
-                href={`/student/group/${id}/${row.id}`}
-                underline="hover"
-                color="inherit"
-                sx={{ display: 'block' }} // Asegura que cubra la celda
-                >
-              <TableCell component="th" scope="row">
-                {index+1}
-              </TableCell>
-              </Link>
-              <TableCell align="right">{row.apellidos}</TableCell>
-              <TableCell align="right">{row.nombre}</TableCell>
-              <TableCell align="right">{row.correo}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-
-</Table>
-</TableContainer>
-
+            '& .MuiDataGrid-row:hover': {
+              backgroundColor: 'var(--body_rowHover)', // Color de fondo al hacer hover
+            },
+            '& .MuiDataGrid-footerContainer': {
+                backgroundColor: 'var(--body_background)', // Fondo de la paginación
+              },
+              '& .MuiTablePagination-root': {
+                color: '#ffffff',           // Color de texto en la paginación
+              },
+              '& .MuiTablePagination-selectIcon': {
+                color: 'var(--body_textColor)',           // Color del icono de selección
+              },
+              '& .MuiSelect-select': {
+                color: 'var(--body_textColor)',           // Color del número de filas por página
+              },
+              '& .MuiTablePagination-actions .MuiSvgIcon-root': {
+                color: 'var(--body_textColor)',           // Color de las flechas de paginación
+        }
+          }}
+      />
+    </Paper>
 </div>
 </div>
     </div>
