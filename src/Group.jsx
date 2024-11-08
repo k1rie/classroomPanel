@@ -18,6 +18,7 @@ import IconButton from '@mui/material/IconButton';
 import { ButtonGroup } from "@mui/material"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Link } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import SearchableTable from "./components/ImportGroups.jsx"
 const Group = ()=>{
 
     const navigate = useNavigate()
@@ -401,9 +402,10 @@ sx={{
                                     }}>Consultar Asistencias</Button>
 </ButtonGroup>
    
-    
   
 </div>
+<SearchableTable/>
+
     <div className={GroupStyles.groupInfo}>
 <GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
 </div>
@@ -429,7 +431,7 @@ sx={{
 <p className={GroupStyles.addStudentButton} onClick={showCreateStudentForm}>Añadir Alumno</p>
 <Form key={2} target="students" input1Type="text" input1="Nombre" input2="Apellidos" input3="Email" addStudent ={addStudent}  addForm ={addForm}/>
 
-<Paper sx={{lg:{height:200}, height: 400, width: '100%' }}>
+<Paper sx={{lg:{height:200}, height: 340, width: '100%' }}>
       <DataGrid
        localeText={localeText}
         rows={students}
@@ -438,7 +440,6 @@ sx={{
         pageSizeOptions={[5, 10]}
         onRowClick={(e)=>{navigate(`/student/group/${id}/${e.row.id}`)}}
         sx={{
-            height: 400,
             backgroundColor: 'var(--body_background)',
             color: 'white',
             borderColor: '#007a87',

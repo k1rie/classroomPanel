@@ -247,9 +247,19 @@ getTasks()
             <div className={StudentStyles.optionsStudentContainer}>
             <IconButton aria-label="delete"  color="primary" variant="outlined" startIcon={<DeleteIcon />} onClick={confirmDeleteShow}>        <DeleteIcon />
 </IconButton>
-            <ButtonGroup sx={{
-        flexDirection: { xs:'column',sm: 'column', md:'row' }, // Cambia a columna en pantallas pequeñas
-}} size="large" variant="outlined" aria-label="Basic button group">
+            <ButtonGroup 
+            sx={{
+                flexDirection: { xs:'column',sm: 'column', md:'row' },
+            
+                border: '2px solid #1976D2', // Borde alrededor del grupo de botones
+                borderRadius: 1, // Bordes redondeados para el contenedor
+            
+            
+                // Estilo responsive
+                display: 'flex',
+               
+              }}
+            size="large" variant="outlined" aria-label="Basic button group">
 <Button className={StudentStyles.editStudent} onClick={showCreateTask2}>Editar Alumno</Button>
                                     <Button className={StudentStyles.attendanceStudent} 
                                     onClick={()=>{

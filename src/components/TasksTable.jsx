@@ -98,8 +98,8 @@ const TasksTable = ({ data, students }) => {
   return (
     <>
       <TableContainer 
-      sx={{lg:{height:200}, height: 400, width: '100%' }}
-      component={Paper} style={{borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px",minHeight:"400px",backgroundColor:"var(--body_background)",border:"1px solid #007a87", borderBottom:"none"}}>
+      sx={{ width: '100%' }}
+      component={Paper} style={{borderBottomLeftRadius:"0px",borderBottomRightRadius:"0px",minHeight:"300px",backgroundColor:"var(--body_background)",border:"1px solid #007a87", borderBottom:"none"}}>
         <Table stickyHeader>
           <TableHead >
             <TableRow>
