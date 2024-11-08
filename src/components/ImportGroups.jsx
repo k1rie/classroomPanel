@@ -71,9 +71,25 @@ console.log(searchTerm)
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon style={{color:"var(--body_textColor)"}} />
             </InputAdornment>
           ),
+        }}
+
+        sx={{
+            '& .MuiInputBase-input': {
+                color: 'var(--body_textColor)', // Cambia el color del texto
+            },
+          
+          
+            '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: 'var(--body_textColor)', // Color del borde normal
+                    },
+                    '&:hover fieldset': {
+                        borderColor: 'primary.main', // Color del borde al pasar el mouse
+                    }
+                },
         }}
       />
 
