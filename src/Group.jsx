@@ -19,6 +19,7 @@ import { ButtonGroup } from "@mui/material"
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Link } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import SearchableTable from "./components/ImportGroups.jsx"
+import SearchStudent from "./components/SearchStudents.jsx"
 const Group = ()=>{
 
     const navigate = useNavigate()
@@ -368,7 +369,7 @@ return(
     <div className={GroupStyles.container}>
 
 <ConfirmDelete message="¿Estas seguro que quieres eliminar este grupo?" addConfirmDelete={addConfirmDelete} confirmDeleteState={confirmDeleteState}/>
-<Form target="updateGroup" students={students} input1Type="text" input1="Grado" input2="Grupo" input3="Especialidad" getGroup ={getGroup}  addForm ={addForm3}/>
+<Form target="updateGroup" students={students} input1Type="text" input1="Grado" input2="Grupo" input3="Nombre del Curso" getGroup ={getGroup}  addForm ={addForm3}/>
 
 <NavBar/>
 
@@ -404,8 +405,10 @@ sx={{
    
   
 </div>
+<div className={GroupStyles.searchsContainer}>
 <SearchableTable/>
-
+<SearchStudent/>
+</div>
     <div className={GroupStyles.groupInfo}>
 <GroupCard  students={` ${groupInfo.grupo}`} area={groupInfo.especialidad} grade={groupInfo.grado} />
 </div>

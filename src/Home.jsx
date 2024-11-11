@@ -72,7 +72,7 @@ function App() {
         input1Type="number"
         input1="Grado"
         input2="Grupo"
-        input3="Especialidad"
+        input3="Nombre del Curso"
         addGroup={addGroup}
         addForm={addForm}
       />
